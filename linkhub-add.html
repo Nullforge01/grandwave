@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add a link — GrandWave</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/auth-guard.js"></script>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+<defs>
+  <g id="i-wave" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12c1.5-4 3-4 4.5 0s3 4 4.5 0 3-4 4.5 0 3 4 4.5 0 3-4 4.5 0"/></g>
+  <g id="i-plug" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v4M16 3v4M6 7h12v3a6 6 0 0 1-12 0V7Z"/><path d="M12 16v5"/></g>
+  <g id="i-film" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M8 5v14M16 5v14"/></g>
+  <g id="i-link" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15 15 9"/><path d="M11 6l1-1a4 4 0 0 1 6 6l-1 1"/><path d="M13 18l-1 1a4 4 0 0 1-6-6l1-1"/></g>
+  <g id="i-check" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="m8.5 12 2.5 2.5L16 9.5"/></g>
+  <g id="i-map" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18 3 21V6l6-3 6 3 6-3v15l-6 3-6-3Z"/></g>
+  <g id="i-eye" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></g>
+  <g id="i-plus" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></g>
+</defs>
+</svg>
+
+<div class="app-shell" id="appShell" style="display:none">
+  <aside class="sidebar">
+    <a class="brand" href="home.html">
+      <div class="brand-mark"><svg width="17" height="13" viewBox="0 0 24 16"><use href="#i-wave" stroke="white" stroke-width="2.4"/></svg></div>
+      GrandWave
+    </a>
+    <div>
+      <div class="nav-label">Categories</div>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-plug"/></svg>Tech<span class="soon-badge">SOON</span></div>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-film"/></svg>Entertainment<span class="soon-badge">SOON</span></div>
+      <a class="nav-item active" href="social.html"><svg width="16" height="16"><use href="#i-link"/></svg>Social</a>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-check"/></svg>Productivity<span class="soon-badge">SOON</span></div>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-map"/></svg>Local<span class="soon-badge">SOON</span></div>
+    </div>
+    <button class="sign-out-btn" onclick="signOut()">Sign out</button>
+  </aside>
+
+  <main>
+    <div class="topnav">
+      <a class="tab" href="linkhub-view.html"><svg width="15" height="15"><use href="#i-eye"/></svg>View links</a>
+      <a class="tab active" href="linkhub-add.html"><svg width="15" height="15"><use href="#i-plus"/></svg>Add link</a>
+    </div>
+    <div class="content">
+      <div class="page-head">
+        <h1>Add a link</h1>
+        <p>Submit your channel, page, or link to be featured on GrandWave — free for now.</p>
+      </div>
+
+      <div class="msg-error" id="errorMsg"></div>
+
+      <div class="form-card">
+        <label>Category</label>
+        <select id="fCategory">
+          <option value="Channel">Channel</option>
+          <option value="TikTok">TikTok</option>
+          <option value="Business">Business</option>
+          <option value="Advertising">Advertising</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Social" selected>Social</option>
+        </select>
+
+        <label>Title</label>
+        <input type="text" id="fTitle" placeholder="e.g. My WhatsApp Channel">
+
+        <label>Link URL</label>
+        <input type="text" id="fUrl" placeholder="https://...">
+
+        <label>Short note (optional)</label>
+        <textarea id="fNote" rows="2" placeholder="What is this link about?"></textarea>
+
+        <button class="btn" id="submitBtn" onclick="submitLink()">Post link</button>
+        <div class="form-note">Posted links appear publicly on the View links tab for everyone using GrandWave.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  let currentUser = null;
+
+  requireAuth().then((session) => {
+    if(!session) return;
+    document.getElementById('appShell').style.display = 'flex';
+    currentUser = session.user;
+  });
+
+  async function signOut(){
+    await sb.auth.signOut();
+    window.location.href = "login.html";
+  }
+
+  function showError(msg){
+    const e = document.getElementById('errorMsg');
+    e.textContent = msg;
+    e.style.display = 'block';
+  }
+
+  async function submitLink(){
+    const category = document.getElementById('fCategory').value;
+    const title = document.getElementById('fTitle').value.trim();
+    const url = document.getElementById('fUrl').value.trim();
+    const note = document.getElementById('fNote').value.trim();
+    if(!title || !url) return;
+
+    document.getElementById('submitBtn').disabled = true;
+    document.getElementById('submitBtn').textContent = 'Posting…';
+
+    const { error } = await sb.from('links').insert({
+      category, title, url, note: note || null,
+      poster_id: currentUser.id,
+      poster_name: currentUser.email
+    });
+
+    if(error){
+      showError(error.message);
+      document.getElementById('submitBtn').disabled = false;
+      document.getElementById('submitBtn').textContent = 'Post link';
+    } else {
+      window.location.href = "linkhub-view.html";
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkHub — GrandWave</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/auth-guard.js"></script>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+<defs>
+  <g id="i-wave" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12c1.5-4 3-4 4.5 0s3 4 4.5 0 3-4 4.5 0 3 4 4.5 0 3-4 4.5 0"/></g>
+  <g id="i-plug" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v4M16 3v4M6 7h12v3a6 6 0 0 1-12 0V7Z"/><path d="M12 16v5"/></g>
+  <g id="i-film" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M8 5v14M16 5v14"/></g>
+  <g id="i-link" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15 15 9"/><path d="M11 6l1-1a4 4 0 0 1 6 6l-1 1"/><path d="M13 18l-1 1a4 4 0 0 1-6-6l1-1"/></g>
+  <g id="i-check" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="m8.5 12 2.5 2.5L16 9.5"/></g>
+  <g id="i-map" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18 3 21V6l6-3 6 3 6-3v15l-6 3-6-3Z"/></g>
+  <g id="i-eye" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></g>
+  <g id="i-plus" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></g>
+  <g id="i-chat" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 1 1-3.4-6.5"/><path d="M21 4l-6.5 6.5"/></g>
+</defs>
+</svg>
+
+<div class="app-shell" id="appShell" style="display:none">
+  <aside class="sidebar">
+    <a class="brand" href="home.html">
+      <div class="brand-mark"><svg width="17" height="13" viewBox="0 0 24 16"><use href="#i-wave" stroke="white" stroke-width="2.4"/></svg></div>
+      GrandWave
+    </a>
+    <div>
+      <div class="nav-label">Categories</div>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-plug"/></svg>Tech<span class="soon-badge">SOON</span></div>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-film"/></svg>Entertainment<span class="soon-badge">SOON</span></div>
+      <a class="nav-item active" href="social.html"><svg width="16" height="16"><use href="#i-link"/></svg>Social</a>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-check"/></svg>Productivity<span class="soon-badge">SOON</span></div>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-map"/></svg>Local<span class="soon-badge">SOON</span></div>
+    </div>
+    <button class="sign-out-btn" onclick="signOut()">Sign out</button>
+  </aside>
+
+  <main>
+    <div class="topnav">
+      <a class="tab active" href="linkhub-view.html"><svg width="15" height="15"><use href="#i-eye"/></svg>View links</a>
+      <a class="tab" href="linkhub-add.html"><svg width="15" height="15"><use href="#i-plus"/></svg>Add link</a>
+    </div>
+    <div class="content">
+      <div class="page-head">
+        <h1>Social — LinkHub</h1>
+        <p>Every link the GrandWave community has posted, organized by Channel, TikTok, Business, Advertising, Entertainment, and Social.</p>
+      </div>
+      <div id="categoryBlocks"><p style="color:var(--text-dim)">Loading…</p></div>
+    </div>
+  </main>
+</div>
+
+<script>
+  const CATEGORIES = ["Channel","TikTok","Business","Advertising","Entertainment","Social"];
+  let currentUserId = null;
+
+  requireAuth().then(async (session) => {
+    if(!session) return;
+    document.getElementById('appShell').style.display = 'flex';
+    currentUserId = session.user.id;
+    await loadLinks();
+  });
+
+  async function signOut(){
+    await sb.auth.signOut();
+    window.location.href = "login.html";
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str || '';
+    return d.innerHTML;
+  }
+
+  async function loadLinks(){
+    const { data: linkRows, error: linkErr } = await sb
+      .from('links')
+      .select('id, category, title, url, note, poster_name')
+      .order('created_at', { ascending: false });
+
+    const { data: voteRows, error: voteErr } = await sb
+      .from('votes')
+      .select('link_id, user_id, value');
+
+    if(linkErr || voteErr){
+      console.error(linkErr || voteErr);
+      document.getElementById('categoryBlocks').innerHTML = '<p style="color:#D9503F">Could not load links.</p>';
+      return;
+    }
+
+    const merged = (linkRows || []).map(l => {
+      const votesForLink = (voteRows || []).filter(v => v.link_id === l.id);
+      const likes = votesForLink.filter(v => v.value === 1).length;
+      const dislikes = votesForLink.filter(v => v.value === -1).length;
+      const mine = votesForLink.find(v => v.user_id === currentUserId);
+      return { ...l, likes, dislikes, myVote: mine ? mine.value : null };
+    });
+
+    render(merged);
+  }
+
+  function render(links){
+    const wrap = document.getElementById('categoryBlocks');
+    wrap.innerHTML = CATEGORIES.map(cat => {
+      const items = links.filter(l => l.category === cat);
+      const cardsHtml = items.length
+        ? items.map(item => `
+            <div class="link-card" style="cursor:default">
+              <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener" style="text-decoration:none; color:inherit">
+                <div class="lc-icon"><svg width="17" height="17"><use href="#i-chat"/></svg></div>
+                <b>${escapeHtml(item.title)}</b>
+                ${item.note ? `<span class="note">${escapeHtml(item.note)}</span>` : ''}
+                <span class="url">${escapeHtml(item.url)}</span>
+                <span class="poster">posted by ${escapeHtml(item.poster_name || 'someone')}</span>
+              </a>
+              <div class="vote-row">
+                <button class="vote-btn like ${item.myVote === 1 ? 'active' : ''}" onclick="vote('${item.id}', 1)">▲ <span id="likes-${item.id}">${item.likes}</span></button>
+                <button class="vote-btn dislike ${item.myVote === -1 ? 'active' : ''}" onclick="vote('${item.id}', -1)">▼ <span id="dislikes-${item.id}">${item.dislikes}</span></button>
+              </div>
+            </div>
+          `).join('')
+        : `<div class="empty-slot">No links here yet<br><span style="font-weight:400">Be the first to add one</span></div>`;
+      return `
+        <div class="cat-block">
+          <div class="cat-head">
+            <h2>${cat}</h2>
+            <span class="cat-count">· ${items.length} link${items.length===1?'':'s'}</span>
+          </div>
+          <div class="link-grid">${cardsHtml}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  async function vote(linkId, value){
+    if(!currentUserId) return;
+    try{
+      await sb.from('votes').upsert(
+        { link_id: linkId, user_id: currentUserId, value },
+        { onConflict: 'link_id,user_id' }
+      );
+    }catch(err){
+      console.error('Vote failed', err);
+    }
+    await loadLinks();
+  }
+</script>
+
+</body>
+</html>

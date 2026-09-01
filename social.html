@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social — GrandWave</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/auth-guard.js"></script>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+<defs>
+  <g id="i-wave" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12c1.5-4 3-4 4.5 0s3 4 4.5 0 3-4 4.5 0 3 4 4.5 0 3-4 4.5 0"/></g>
+  <g id="i-plug" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v4M16 3v4M6 7h12v3a6 6 0 0 1-12 0V7Z"/><path d="M12 16v5"/></g>
+  <g id="i-film" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M8 5v14M16 5v14"/></g>
+  <g id="i-link" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15 15 9"/><path d="M11 6l1-1a4 4 0 0 1 6 6l-1 1"/><path d="M13 18l-1 1a4 4 0 0 1-6-6l1-1"/></g>
+  <g id="i-check" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="m8.5 12 2.5 2.5L16 9.5"/></g>
+  <g id="i-map" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18 3 21V6l6-3 6 3 6-3v15l-6 3-6-3Z"/></g>
+</defs>
+</svg>
+
+<div class="app-shell" id="appShell" style="display:none">
+  <aside class="sidebar">
+    <a class="brand" href="home.html">
+      <div class="brand-mark"><svg width="17" height="13" viewBox="0 0 24 16"><use href="#i-wave" stroke="white" stroke-width="2.4"/></svg></div>
+      GrandWave
+    </a>
+    <div>
+      <div class="nav-label">Categories</div>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-plug"/></svg>Tech<span class="soon-badge">SOON</span></div>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-film"/></svg>Entertainment<span class="soon-badge">SOON</span></div>
+      <a class="nav-item active" href="social.html"><svg width="16" height="16"><use href="#i-link"/></svg>Social</a>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-check"/></svg>Productivity<span class="soon-badge">SOON</span></div>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-map"/></svg>Local<span class="soon-badge">SOON</span></div>
+    </div>
+    <button class="sign-out-btn" onclick="signOut()">Sign out</button>
+  </aside>
+
+  <main>
+    <div class="content">
+      <div class="page-head">
+        <h1>Social</h1>
+        <p>Features in this category.</p>
+      </div>
+      <a href="linkhub-view.html" style="text-decoration:none">
+        <div class="link-card" style="max-width:320px">
+          <div class="lc-icon"><svg width="17" height="17"><use href="#i-link"/></svg></div>
+          <b>LinkHub Pro</b>
+          <span class="note">Channel, TikTok, business, and advertising links — all in one place.</span>
+        </div>
+      </a>
+    </div>
+  </main>
+</div>
+
+<script>
+  requireAuth().then((session) => {
+    if(session) document.getElementById('appShell').style.display = 'flex';
+  });
+
+  async function signOut(){
+    await sb.auth.signOut();
+    window.location.href = "login.html";
+  }
+</script>
+
+</body>
+</html>

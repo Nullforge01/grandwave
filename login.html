@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in — GrandWave</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/supabase-client.js"></script>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+<defs>
+  <g id="i-wave" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12c1.5-4 3-4 4.5 0s3 4 4.5 0 3-4 4.5 0 3 4 4.5 0 3-4 4.5 0"/></g>
+</defs>
+</svg>
+
+<div class="login-screen">
+  <div class="login-card">
+    <div class="login-mark"><svg width="20" height="15" viewBox="0 0 24 16"><use href="#i-wave" stroke="white" stroke-width="2.4"/></svg></div>
+    <h1>Welcome to GrandWave</h1>
+    <p>Sign in to view and post links.</p>
+
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password" style="display:block">
+
+    <div class="msg-error" id="errorMsg"></div>
+    <div class="msg-success" id="successMsg"></div>
+
+    <button class="btn" id="primaryBtn" style="width:100%" onclick="handlePasswordSubmit()">Sign in</button>
+
+    <div class="login-note">
+      <a onclick="toggleSignUp()" id="toggleSignUpLink">New here? Create an account</a>
+      <br><br>
+      <a onclick="showMagicLink()" id="magicLinkToggle">Or sign in with a magic link instead</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  let isSignUp = false;
+  let mode = "password";
+
+  function showError(msg){
+    const e = document.getElementById('errorMsg');
+    e.textContent = msg; e.style.display = 'block';
+    document.getElementById('successMsg').style.display = 'none';
+  }
+  function showSuccess(msg){
+    const s = document.getElementById('successMsg');
+    s.textContent = msg; s.style.display = 'block';
+    document.getElementById('errorMsg').style.display = 'none';
+  }
+  function clearMsgs(){
+    document.getElementById('errorMsg').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'none';
+  }
+
+  function toggleSignUp(){
+    isSignUp = !isSignUp;
+    document.getElementById('primaryBtn').textContent = isSignUp ? "Create account" : "Sign in";
+    document.getElementById('toggleSignUpLink').textContent = isSignUp ? "Already have an account? Sign in" : "New here? Create an account";
+    clearMsgs();
+  }
+
+  function showMagicLink(){
+    mode = "magic";
+    document.getElementById('password').style.display = 'none';
+    document.getElementById('primaryBtn').textContent = "Send magic link";
+    document.getElementById('primaryBtn').setAttribute('onclick', 'handleMagicLink()');
+    document.getElementById('toggleSignUpLink').style.display = 'none';
+    document.getElementById('magicLinkToggle').textContent = "Use email + password instead";
+    document.getElementById('magicLinkToggle').setAttribute('onclick', 'showPassword()');
+    clearMsgs();
+  }
+
+  function showPassword(){
+    mode = "password";
+    document.getElementById('password').style.display = 'block';
+    document.getElementById('primaryBtn').textContent = isSignUp ? "Create account" : "Sign in";
+    document.getElementById('primaryBtn').setAttribute('onclick', 'handlePasswordSubmit()');
+    document.getElementById('toggleSignUpLink').style.display = 'inline';
+    document.getElementById('magicLinkToggle').textContent = "Or sign in with a magic link instead";
+    document.getElementById('magicLinkToggle').setAttribute('onclick', 'showMagicLink()');
+    clearMsgs();
+  }
+
+  async function handlePasswordSubmit(){
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    if(!email || !password) return;
+    clearMsgs();
+
+    const { error } = isSignUp
+      ? await sb.auth.signUp({ email, password })
+      : await sb.auth.signInWithPassword({ email, password });
+
+    if(error){
+      showError(error.message);
+    } else if(isSignUp){
+      showSuccess("Account created — check your email to confirm, then sign in.");
+    } else {
+      window.location.href = "home.html";
+    }
+  }
+
+  async function handleMagicLink(){
+    const email = document.getElementById('email').value.trim();
+    if(!email) return;
+    clearMsgs();
+
+    const { error } = await sb.auth.signInWithOtp({ email });
+    if(error){ showError(error.message); }
+    else{ showSuccess("Check your email for the magic link."); }
+  }
+
+  // If already signed in, skip straight to Home.
+  sb.auth.getSession().then(({ data }) => {
+    if(data.session) window.location.href = "home.html";
+  });
+</script>
+
+</body>
+</html>

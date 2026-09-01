@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GrandWave</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/supabase-client.js"></script>
+</head>
+<body>
+<script>
+  sb.auth.getSession().then(({ data }) => {
+    window.location.href = data.session ? "home.html" : "login.html";
+  });
+</script>
+</body>
+</html>
