@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API Verse — GrandWave</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/auth-guard.js"></script>
+<style>
+  /* Page-specific additions — everything else reuses css/styles.css */
+  .toolbar{ display:flex; gap:10px; margin-bottom:18px; flex-wrap:wrap; align-items:center; }
+  .search-box{ flex:1; min-width:220px; display:flex; align-items:center; gap:8px; background:var(--panel); border:1.5px solid var(--line); border-radius:12px; padding:10px 14px; }
+  .search-box input{ border:none; outline:none; font-family:var(--font-body); font-weight:600; font-size:0.9rem; width:100%; background:transparent; color:var(--ink); }
+  .result-count{ font-family:var(--font-mono); font-size:0.76rem; color:var(--text-dim); white-space:nowrap; }
+  .cat-pills{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+  .pill{ padding:7px 14px; border-radius:999px; border:1.5px solid var(--line); background:var(--panel); color:var(--text-dim); font-size:0.8rem; font-weight:700; cursor:pointer; }
+  .pill.active{ background:var(--lav); color:#fff; border-color:var(--lav); }
+  .api-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(255px, 1fr)); gap:14px; }
+  .api-card{ background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:9px; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease; }
+  .api-card:hover{ transform:translateY(-3px); box-shadow:0 12px 24px -14px rgba(46,43,69,0.18); }
+  .api-card-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
+  .api-icon{ width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; background:var(--lav-soft); color:var(--lav); font-family:var(--font-display); font-weight:700; font-size:0.9rem; flex-shrink:0; }
+  .fav-btn{ background:none; border:none; cursor:pointer; color:#D6D3E8; padding:2px; }
+  .fav-btn.active{ color:var(--sun); }
+  .api-card h3{ font-family:var(--font-display); font-size:0.98rem; }
+  .api-card .cat-tag{ font-family:var(--font-mono); font-size:0.68rem; color:var(--lav); font-weight:600; }
+  .api-card p{ font-size:0.8rem; color:var(--text-dim); line-height:1.4; font-weight:500; }
+  .tag-row{ display:flex; gap:6px; flex-wrap:wrap; margin-top:2px; }
+  .mini-tag{ font-family:var(--font-mono); font-size:0.62rem; font-weight:600; padding:2px 8px; border-radius:999px; background:var(--bg); color:var(--text-dim); border:1px solid var(--line); }
+  .mini-tag.auth-none{ color:#0E8E75; background:var(--mint-soft); border-color:var(--mint-soft); }
+  .overlay{ position:fixed; inset:0; background:rgba(46,43,69,0.35); display:none; align-items:flex-start; justify-content:center; padding:40px 16px; overflow-y:auto; z-index:20; }
+  .overlay.open{ display:flex; }
+  .detail-card{ background:var(--panel); border-radius:22px; max-width:640px; width:100%; }
+  .detail-head{ padding:26px 28px 18px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:flex-start; gap:14px; }
+  .detail-head .api-icon{ width:44px; height:44px; font-size:1.1rem; margin-bottom:10px; }
+  .detail-head h2{ font-family:var(--font-display); font-size:1.3rem; }
+  .close-btn{ background:var(--bg); border:none; border-radius:999px; width:30px; height:30px; cursor:pointer; color:var(--text-dim); font-size:1rem; flex-shrink:0; }
+  .detail-body{ padding:20px 28px 28px; }
+  .detail-body p.desc{ color:var(--text-dim); font-weight:500; font-size:0.9rem; line-height:1.5; margin-bottom:16px; }
+  .detail-meta{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:18px; }
+  .meta-chip{ background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:8px 12px; font-size:0.76rem; }
+  .meta-chip b{ display:block; font-family:var(--font-display); font-size:0.82rem; }
+  .code-tabs{ display:flex; gap:6px; margin-bottom:10px; }
+  .code-tab{ padding:6px 14px; border-radius:999px; border:1.5px solid var(--line); background:var(--bg); color:var(--text-dim); font-size:0.76rem; font-weight:700; cursor:pointer; }
+  .code-tab.active{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .code-block{ background:var(--ink); color:#DFDBF5; border-radius:12px; padding:14px 16px; font-family:var(--font-mono); font-size:0.78rem; overflow-x:auto; white-space:pre; margin-bottom:16px; }
+  .docs-btn{ display:inline-flex; align-items:center; gap:8px; background:var(--lav); color:#fff; text-decoration:none; padding:10px 20px; border-radius:999px; font-family:var(--font-display); font-weight:700; font-size:0.88rem; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+<defs>
+  <g id="i-wave" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12c1.5-4 3-4 4.5 0s3 4 4.5 0 3-4 4.5 0 3 4 4.5 0 3-4 4.5 0"/></g>
+  <g id="i-plug" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v4M16 3v4M6 7h12v3a6 6 0 0 1-12 0V7Z"/><path d="M12 16v5"/></g>
+  <g id="i-film" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M8 5v14M16 5v14"/></g>
+  <g id="i-link" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15 15 9"/><path d="M11 6l1-1a4 4 0 0 1 6 6l-1 1"/><path d="M13 18l-1 1a4 4 0 0 1-6-6l1-1"/></g>
+  <g id="i-check" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="m8.5 12 2.5 2.5L16 9.5"/></g>
+  <g id="i-map" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18 3 21V6l6-3 6 3 6-3v15l-6 3-6-3Z"/></g>
+  <g id="i-search" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.35-4.35"/></g>
+  <g id="i-star" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.8 6.3.6-4.7 4.3 1.3 6.2L12 16.9 6.4 19.9l1.3-6.2L3 9.4l6.3-.6L12 3Z"/></g>
+  <g id="i-grid" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></g>
+  <g id="i-arrow" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></g>
+</defs>
+</svg>
+
+<div class="app-shell" id="appShell" style="display:none">
+  <aside class="sidebar">
+    <a class="brand" href="home.html">
+      <div class="brand-mark"><svg width="17" height="13" viewBox="0 0 24 16"><use href="#i-wave" stroke="white" stroke-width="2.4"/></svg></div>
+      GrandWave
+    </a>
+    <div>
+      <div class="nav-label">Categories</div>
+      <a class="nav-item active" href="tech.html"><svg width="16" height="16"><use href="#i-plug"/></svg>Tech</a>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-film"/></svg>Entertainment<span class="soon-badge">SOON</span></div>
+      <a class="nav-item" href="social.html"><svg width="16" height="16"><use href="#i-link"/></svg>Social</a>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-check"/></svg>Productivity<span class="soon-badge">SOON</span></div>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-map"/></svg>Local<span class="soon-badge">SOON</span></div>
+    </div>
+    <button class="sign-out-btn" onclick="signOut()">Sign out</button>
+  </aside>
+
+  <main>
+    <div class="topnav">
+      <a class="tab active" href="apiverse-browse.html"><svg width="15" height="15"><use href="#i-grid"/></svg>Browse</a>
+      <a class="tab" href="apiverse-favorites.html"><svg width="15" height="15"><use href="#i-star"/></svg>Favorites</a>
+    </div>
+
+    <div class="content">
+      <div class="page-head">
+        <h1>API Verse</h1>
+        <p>Every API, One Universe — search, filter, and save from our public API directory.</p>
+      </div>
+
+      <div class="toolbar">
+        <div class="search-box">
+          <svg width="16" height="16"><use href="#i-search"/></svg>
+          <input type="text" id="searchInput" placeholder="Search by name or description…" oninput="renderGrid()">
+        </div>
+        <span class="result-count" id="resultCount"></span>
+      </div>
+
+      <div class="cat-pills" id="catPills"></div>
+
+      <div class="api-grid" id="apiGrid"><p style="color:var(--text-dim)">Loading…</p></div>
+    </div>
+  </main>
+</div>
+
+<div class="overlay" id="overlay" onclick="if(event.target===this) closeDetail()">
+  <div class="detail-card">
+    <div class="detail-head">
+      <div>
+        <div class="api-icon" id="detailIcon"></div>
+        <h2 id="detailName"></h2>
+        <span class="cat-tag" id="detailCat"></span>
+      </div>
+      <button class="close-btn" onclick="closeDetail()">✕</button>
+    </div>
+    <div class="detail-body">
+      <p class="desc" id="detailDesc"></p>
+      <div class="detail-meta">
+        <div class="meta-chip"><b id="detailAuth"></b><span>Auth type</span></div>
+        <div class="meta-chip"><b>Public</b><span>Access</span></div>
+        <div class="meta-chip"><b id="detailTags">—</b><span>Tags</span></div>
+      </div>
+      <div class="code-tabs">
+        <button class="code-tab active" data-lang="curl" onclick="showCode('curl')">curl</button>
+        <button class="code-tab" data-lang="python" onclick="showCode('python')">Python</button>
+        <button class="code-tab" data-lang="js" onclick="showCode('js')">JavaScript</button>
+      </div>
+      <div class="code-block" id="codeBlock"></div>
+      <a href="#" target="_blank" class="docs-btn" id="detailDocsLink">
+        View official docs <svg width="14" height="14"><use href="#i-arrow" stroke="white"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  let allApis = [];
+  let favoriteIds = new Set();
+  let currentUserId = null;
+  let activeCategory = "All";
+  let currentDetailApi = null;
+
+  requireAuth().then(async (session) => {
+    if(!session) return;
+    document.getElementById('appShell').style.display = 'flex';
+    currentUserId = session.user.id;
+    await loadData();
+  });
+
+  async function signOut(){
+    await sb.auth.signOut();
+    window.location.href = "login.html";
+  }
+
+  async function loadData(){
+    const { data: apis, error: apiErr } = await sb.from('apis').select('*').order('name');
+    const { data: favs, error: favErr } = await sb.from('favorites').select('api_id').eq('user_id', currentUserId);
+
+    if(apiErr){
+      document.getElementById('apiGrid').innerHTML = '<p style="color:#D9503F">Could not load APIs.</p>';
+      console.error(apiErr);
+      return;
+    }
+
+    allApis = apis || [];
+    favoriteIds = new Set((favs || []).map(f => f.api_id));
+
+    renderPills();
+    renderGrid();
+  }
+
+  function renderPills(){
+    const categories = ["All", ...new Set(allApis.map(a => a.category))].sort((a,b) => a === "All" ? -1 : a.localeCompare(b));
+    document.getElementById('catPills').innerHTML = categories.map(c =>
+      `<button class="pill ${c === activeCategory ? 'active' : ''}" onclick="setCategory('${c}')">${c}</button>`
+    ).join('');
+  }
+
+  function setCategory(c){
+    activeCategory = c;
+    renderPills();
+    renderGrid();
+  }
+
+  function initials(name){
+    return name.split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase();
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str || '';
+    return d.innerHTML;
+  }
+
+  function renderGrid(){
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const filtered = allApis.filter(a =>
+      (activeCategory === "All" || a.category === activeCategory) &&
+      (a.name.toLowerCase().includes(query) || a.description.toLowerCase().includes(query))
+    );
+
+    document.getElementById('resultCount').textContent = `${filtered.length} of ${allApis.length} shown`;
+
+    document.getElementById('apiGrid').innerHTML = filtered.map(a => `
+      <div class="api-card" onclick="openDetail('${a.id}')">
+        <div class="api-card-top">
+          <div class="api-icon">${initials(a.name)}</div>
+          <button class="fav-btn ${favoriteIds.has(a.id) ? 'active' : ''}" onclick="event.stopPropagation(); toggleFav('${a.id}')">
+            <svg width="18" height="18"><use href="#i-star"/></svg>
+          </button>
+        </div>
+        <h3>${escapeHtml(a.name)}</h3>
+        <span class="cat-tag">${escapeHtml(a.category)}</span>
+        <p>${escapeHtml(a.description)}</p>
+        <div class="tag-row">
+          ${(a.tags || []).map(t => `<span class="mini-tag ${t === 'no-auth' ? 'auth-none' : ''}">${escapeHtml(t)}</span>`).join('')}
+        </div>
+      </div>
+    `).join('') || '<p style="color:var(--text-dim)">No APIs match your search.</p>';
+  }
+
+  async function toggleFav(id){
+    if(favoriteIds.has(id)){
+      await sb.from('favorites').delete().eq('api_id', id).eq('user_id', currentUserId);
+      favoriteIds.delete(id);
+    } else {
+      await sb.from('favorites').insert({ api_id: id, user_id: currentUserId });
+      favoriteIds.add(id);
+    }
+    renderGrid();
+  }
+
+  const CODE_SNIPPETS = {
+    curl: (a) => `curl ${a.base_url || a.docs_url}${a.auth_type === 'apiKey' ? ' \\\n  -H "Authorization: Bearer YOUR_API_KEY"' : ''}`,
+    python: (a) => `import requests\n\nresponse = requests.get(\n  "${a.base_url || a.docs_url}"${a.auth_type === 'apiKey' ? ',\n  headers={"Authorization": "Bearer YOUR_API_KEY"}' : ''}\n)\nprint(response.json())`,
+    js: (a) => `fetch("${a.base_url || a.docs_url}"${a.auth_type === 'apiKey' ? ', {\n  headers: { Authorization: "Bearer YOUR_API_KEY" }\n}' : ''})\n  .then(res => res.json())\n  .then(console.log);`
+  };
+
+  function openDetail(id){
+    const a = allApis.find(x => x.id === id);
+    currentDetailApi = a;
+    document.getElementById('detailIcon').textContent = initials(a.name);
+    document.getElementById('detailName').textContent = a.name;
+    document.getElementById('detailCat').textContent = a.category;
+    document.getElementById('detailDesc').textContent = a.description;
+    document.getElementById('detailAuth').textContent = a.auth_type === 'none' ? 'No auth' : a.auth_type;
+    document.getElementById('detailTags').textContent = (a.tags || []).join(', ') || '—';
+    document.getElementById('detailDocsLink').href = a.docs_url;
+    document.querySelectorAll('.code-tab').forEach((t,i) => t.classList.toggle('active', i===0));
+    showCode('curl');
+    document.getElementById('overlay').classList.add('open');
+  }
+
+  function closeDetail(){
+    document.getElementById('overlay').classList.remove('open');
+  }
+
+  function showCode(lang){
+    document.querySelectorAll('.code-tab').forEach(t => t.classList.toggle('active', t.dataset.lang === lang));
+    document.getElementById('codeBlock').textContent = CODE_SNIPPETS[lang](currentDetailApi);
+  }
+</script>
+
+</body>
+</html>
