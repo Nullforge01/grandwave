@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Translator — GrandWave</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/auth-guard.js"></script>
+<style>
+  /* Only the layout this tool needs that isn't already in styles.css —
+     colors/fonts still come from our shared design tokens. */
+  .translator-controls{ display:flex; gap:10px; align-items:center; margin-bottom:16px; flex-wrap:wrap; }
+  .translator-controls select{ flex:1; min-width:140px; margin-bottom:0; }
+  .swap-btn{ width:44px; height:44px; border-radius:12px; border:1.5px solid var(--line); background:var(--bg); color:var(--text-dim); font-size:1.1rem; cursor:pointer; flex-shrink:0; }
+  .panels{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px; }
+  .panel{ background:var(--bg); border:1.5px solid var(--line); border-radius:14px; overflow:hidden; }
+  .panel-head{ display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:1px solid var(--line); font-size:0.78rem; color:var(--text-dim); font-weight:700; }
+  .panel textarea, .panel .output{ width:100%; height:220px; padding:14px; background:transparent; border:0; outline:0; color:var(--ink); font-family:var(--font-body); font-size:0.95rem; line-height:1.5; resize:none; }
+  .panel .output{ overflow-y:auto; white-space:pre-wrap; }
+  .translator-actions{ display:flex; gap:10px; }
+  .translator-actions .btn.secondary{ background:var(--lav-soft); color:var(--lav); flex:none; }
+  .translator-actions .btn.primary{ flex:1; }
+  .translator-status{ text-align:center; min-height:20px; margin-top:12px; color:var(--text-dim); font-size:0.85rem; font-weight:600; }
+  @media (max-width:700px){ .panels{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+<defs>
+  <g id="i-wave" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12c1.5-4 3-4 4.5 0s3 4 4.5 0 3-4 4.5 0 3 4 4.5 0 3-4 4.5 0"/></g>
+  <g id="i-plug" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v4M16 3v4M6 7h12v3a6 6 0 0 1-12 0V7Z"/><path d="M12 16v5"/></g>
+  <g id="i-film" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M8 5v14M16 5v14"/></g>
+  <g id="i-link" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15 15 9"/><path d="M11 6l1-1a4 4 0 0 1 6 6l-1 1"/><path d="M13 18l-1 1a4 4 0 0 1-6-6l1-1"/></g>
+  <g id="i-check" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="m8.5 12 2.5 2.5L16 9.5"/></g>
+  <g id="i-map" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18 3 21V6l6-3 6 3 6-3v15l-6 3-6-3Z"/></g>
+</defs>
+</svg>
+
+<div class="app-shell" id="appShell" style="display:none">
+  <aside class="sidebar">
+    <a class="brand" href="home.html">
+      <div class="brand-mark"><svg width="17" height="13" viewBox="0 0 24 16"><use href="#i-wave" stroke="white" stroke-width="2.4"/></svg></div>
+      GrandWave
+    </a>
+    <div>
+      <div class="nav-label">Categories</div>
+      <a class="nav-item active" href="tech.html"><svg width="16" height="16"><use href="#i-plug"/></svg>Tech</a>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-film"/></svg>Entertainment<span class="soon-badge">SOON</span></div>
+      <a class="nav-item" href="social.html"><svg width="16" height="16"><use href="#i-link"/></svg>Social</a>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-check"/></svg>Productivity<span class="soon-badge">SOON</span></div>
+      <div class="nav-item disabled"><svg width="16" height="16"><use href="#i-map"/></svg>Local<span class="soon-badge">SOON</span></div>
+    </div>
+    <button class="sign-out-btn" onclick="signOut()">Sign out</button>
+  </aside>
+
+  <main>
+    <div class="content">
+      <div class="page-head">
+        <h1>AI Translator</h1>
+        <p>Fast, intelligent, context-aware text translation.</p>
+      </div>
+
+      <div class="form-card" style="max-width:820px">
+        <div class="translator-controls">
+          <select id="source">
+            <option value="Auto">Auto Detect</option>
+            <option>English</option><option>Shona</option><option>French</option>
+            <option>Spanish</option><option>Portuguese</option><option>German</option>
+            <option>Italian</option><option>Japanese</option><option>Chinese</option>
+            <option>Arabic</option><option>Hindi</option><option>Swahili</option>
+            <option>Zulu</option><option>Ndebele</option>
+          </select>
+          <button class="swap-btn" onclick="swapLang()" title="Swap languages">⇄</button>
+          <select id="target">
+            <option>English</option><option>Shona</option><option>French</option>
+            <option>Spanish</option><option>Portuguese</option><option>German</option>
+            <option>Italian</option><option>Japanese</option><option>Chinese</option>
+            <option>Arabic</option><option>Hindi</option><option>Swahili</option>
+            <option>Zulu</option><option>Ndebele</option>
+          </select>
+        </div>
+
+        <div class="panels">
+          <div class="panel">
+            <div class="panel-head"><span>Original text</span><span id="count">0 characters</span></div>
+            <textarea id="input" placeholder="Enter text to translate..."></textarea>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><span>Translation</span><button class="btn secondary" style="padding:4px 12px; font-size:0.72rem" onclick="copyText()">Copy</button></div>
+            <div class="output" id="output">Your translation will appear here.</div>
+          </div>
+        </div>
+
+        <div class="translator-actions">
+          <button class="btn primary" id="translateBtn" onclick="translateText()">Translate</button>
+          <button class="btn secondary" onclick="clearAll()">Clear</button>
+        </div>
+
+        <div class="translator-status" id="status"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  requireAuth().then((session) => {
+    if(session) document.getElementById('appShell').style.display = 'flex';
+  });
+
+  async function signOut(){
+    await sb.auth.signOut();
+    window.location.href = "login.html";
+  }
+
+  const API_URL = "https://api.eu.apyhub.com/sharpapi/translate-text";
+  const API_KEY = "aa78e2d3";
+
+  const input = document.getElementById("input");
+  const output = document.getElementById("output");
+  const status = document.getElementById("status");
+  const count = document.getElementById("count");
+
+  input.addEventListener("input", () => {
+    count.textContent = `${input.value.length} characters`;
+  });
+
+  async function translateText(){
+    const text = input.value.trim();
+    const language = document.getElementById("target").value;
+
+    if(!text){
+      status.textContent = "Enter some text first.";
+      return;
+    }
+
+    status.textContent = "Translating...";
+    output.textContent = "";
+    document.getElementById("translateBtn").disabled = true;
+
+    try{
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "apy-token": API_KEY },
+        body: JSON.stringify({ content: text, language: language, voice_tone: "neutral" })
+      });
+
+      const data = await res.json();
+      if(!res.ok) throw new Error(data?.error?.message || "Translation request failed.");
+
+      if(data.translated_text){ output.textContent = data.translated_text; }
+      else if(data.translation){ output.textContent = data.translation; }
+      else if(data.result){ output.textContent = typeof data.result === "string" ? data.result : JSON.stringify(data.result, null, 2); }
+      else if(data.status_url){ output.textContent = "Translation job submitted. Check the returned job status."; }
+      else{ output.textContent = JSON.stringify(data, null, 2); }
+
+      status.textContent = "Translation complete.";
+    }catch(err){
+      output.textContent = "";
+      status.textContent = err.message || "Unable to translate text.";
+    }finally{
+      document.getElementById("translateBtn").disabled = false;
+    }
+  }
+
+  function copyText(){
+    const text = output.textContent.trim();
+    if(!text || text === "Your translation will appear here.") return;
+    navigator.clipboard.writeText(text);
+    status.textContent = "Translation copied.";
+  }
+
+  function clearAll(){
+    input.value = "";
+    output.textContent = "Your translation will appear here.";
+    count.textContent = "0 characters";
+    status.textContent = "";
+  }
+
+  function swapLang(){
+    const source = document.getElementById("source");
+    const target = document.getElementById("target");
+    if(source.value === "Auto") return;
+    const old = source.value;
+    source.value = target.value;
+    target.value = old;
+  }
+</script>
+
+</body>
+</html>
