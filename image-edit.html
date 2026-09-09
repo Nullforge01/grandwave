@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>AI Edit — GrandWave</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/styles.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script><script src="js/supabase-client.js"></script><script src="js/auth-guard.js"></script></head><body>
+<div class="studio-shell">
+<aside class="studio-sidebar">
+<a class="studio-brand" href="tech.html"><span class="studio-brand-mark">G</span><span>GrandWave<small>Image Studio</small></span></a>
+<nav><div class="studio-nav-label">Workspace</div><a class="studio-nav " href="image-studio.html"><span>⌂</span>Studio</a><a class="studio-nav " href="image-create.html"><span>✦</span>Create</a><a class="studio-nav active" href="image-edit.html"><span>✎</span>Edit</a><a class="studio-nav " href="image-enhance.html"><span>↗</span>Enhance</a><a class="studio-nav " href="image-poster.html"><span>▣</span>Poster</a><a class="studio-nav " href="image-logo.html"><span>◇</span>Logo</a><a class="studio-nav " href="image-templates.html"><span>▤</span>Templates</a><a class="studio-nav " href="image-projects.html"><span>▦</span>Projects</a><a class="studio-nav " href="image-history.html"><span>◷</span>History</a></nav>
+<div class="studio-side-bottom">
+<div class="usage-mini"><div><b>Free generations</b><span id="usageCount">3/3</span></div><div class="usage-bar"><i id="usageBar"></i></div><small>Daily limit resets automatically.</small></div>
+<a href="tech.html" class="back-grandwave">← Back to GrandWave</a>
+</div></aside>
+<main class="studio-main">
+<header class="studio-top"><div><div class="eyebrow">IMAGE STUDIO</div><h1>AI Edit</h1><p>Transform an existing image with precise instructions.</p></div><button class="mobile-menu" onclick="document.querySelector('.studio-sidebar').classList.toggle('open')">☰</button></header>
+<div class="studio-wrap"><div class="studio-card"><div class="studio-form">
+<div><label>Upload image</label><input type="file" accept="image/*"></div><div><label>What should change?</label><textarea placeholder="Remove the person in the background and replace the area with a natural park scene..."></textarea></div>
+<div class="studio-row"><div><label>Edit mode</label><select><option>Smart Edit</option><option>Remove Object</option><option>Replace Object</option><option>Expand Image</option></select></div><div><label>Strength</label><select><option>Balanced</option><option>Precise</option><option>Creative</option></select></div><div><label>Output</label><select><option>Keep original</option><option>Square</option><option>Landscape</option><option>Portrait</option></select></div></div><button class="studio-btn">Apply AI edit</button><div class="preview"><div><strong>Editing preview</strong><p>Your uploaded image and result will appear here.</p></div></div></div></div></div>
+</main></div>
+<style>
+.studio-shell{min-height:100vh;display:flex;background:radial-gradient(circle at 80% 10%,rgba(138,126,245,.13),transparent 35%),radial-gradient(circle at 10% 90%,rgba(47,216,198,.11),transparent 35%),#fbfaff}
+.studio-sidebar{width:250px;flex-shrink:0;position:sticky;top:0;height:100vh;padding:22px 14px;display:flex;flex-direction:column;background:rgba(255,255,255,.58);backdrop-filter:blur(22px);border-right:1px solid rgba(255,255,255,.75);z-index:20}
+.studio-brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--font-display);font-weight:700;font-size:1rem;padding:3px 8px 22px}
+.studio-brand small{display:block;color:var(--text-dim);font:600 .62rem var(--font-body);margin-top:2px}
+.studio-brand-mark{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;color:white;background:linear-gradient(135deg,var(--coral),var(--lav));box-shadow:0 7px 20px rgba(138,126,245,.28)}
+.studio-nav-label,.eyebrow{font:700 .64rem var(--font-mono);letter-spacing:.12em;color:#9694b8;text-transform:uppercase}
+.studio-nav-label{padding:10px}
+.studio-nav{display:flex;align-items:center;gap:10px;text-decoration:none;color:#6c6a93;font-weight:700;font-size:.82rem;padding:10px;border-radius:13px;margin:2px 0;transition:.2s}
+.studio-nav:hover{background:rgba(255,255,255,.7);transform:translateX(3px)}
+.studio-nav.active{background:var(--lav-soft);color:#6657c9}
+.studio-nav span{width:22px;text-align:center;font-size:1rem}
+.studio-side-bottom{margin-top:auto}.usage-mini{padding:13px;border:1px solid var(--glass-border);border-radius:16px;background:rgba(255,255,255,.42);font-size:.72rem}
+.usage-mini>div:first-child{display:flex;justify-content:space-between;margin-bottom:8px}.usage-mini span{color:var(--lav);font-weight:800}.usage-bar{height:5px;background:rgba(138,126,245,.12);border-radius:10px;overflow:hidden}.usage-bar i{display:block;width:100%;height:100%;background:linear-gradient(90deg,var(--coral),var(--lav));border-radius:10px}.usage-mini small{display:block;color:var(--text-dim);margin-top:7px}
+.back-grandwave{display:block;text-decoration:none;color:var(--text-dim);font-size:.74rem;font-weight:700;padding:13px 8px}
+.studio-main{flex:1;min-width:0;padding:34px clamp(18px,4vw,54px) 70px}
+.studio-top{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:26px}
+.studio-top h1{font:700 1.7rem var(--font-display);margin:7px 0 4px}.studio-top p{color:var(--text-dim);font-size:.88rem}
+.mobile-menu{display:none;border:0;background:var(--glass-bg);border-radius:12px;padding:10px}
+.studio-wrap{max-width:1100px;margin:auto}.studio-card{background:rgba(255,255,255,.57);backdrop-filter:blur(18px);border:1px solid var(--glass-border);box-shadow:var(--glass-shadow);border-radius:22px;padding:22px}
+.studio-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.studio-tool{padding:18px;border-radius:18px;border:1px solid rgba(255,255,255,.75);background:rgba(255,255,255,.43);text-decoration:none;transition:.2s}
+.studio-tool:hover{transform:translateY(-4px);box-shadow:0 15px 35px rgba(80,70,150,.12)}
+.tool-icon{width:40px;height:40px;border-radius:14px;display:grid;place-items:center;background:var(--lav-soft);color:var(--lav);font-size:1.1rem;margin-bottom:12px}
+.studio-tool b{font-family:var(--font-display);display:block}.studio-tool span{font-size:.76rem;color:var(--text-dim);line-height:1.45;display:block;margin-top:5px}
+.studio-form{display:grid;gap:14px}.studio-form label{margin:0}.studio-form textarea{min-height:150px}
+.studio-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.studio-row select{margin:0}
+.studio-btn{border:0;border-radius:999px;padding:12px 20px;color:white;font:700 .86rem var(--font-display);background:linear-gradient(135deg,var(--coral),var(--lav));box-shadow:0 8px 20px rgba(138,126,245,.24);cursor:pointer}
+.studio-btn.secondary{background:rgba(255,255,255,.55);color:var(--ink);box-shadow:none;border:1px solid var(--glass-border)}
+.studio-actions{display:flex;gap:9px;flex-wrap:wrap}.studio-note{color:var(--text-dim);font-size:.74rem;line-height:1.5}
+.preview{min-height:260px;border:1.5px dashed rgba(138,126,245,.3);border-radius:20px;display:grid;place-items:center;text-align:center;padding:30px;background:linear-gradient(135deg,rgba(138,126,245,.06),rgba(47,216,198,.05))}
+.preview strong{font-family:var(--font-display)}.preview p{font-size:.76rem;color:var(--text-dim);max-width:430px;margin:7px auto}
+.hero-studio{display:grid;grid-template-columns:1.4fr .8fr;gap:18px;margin-bottom:20px}.hero-copy{padding:28px}.hero-copy h2{font:700 clamp(1.7rem,4vw,2.8rem) var(--font-display);line-height:1.05;margin:8px 0}.hero-copy p{color:var(--text-dim);max-width:600px;line-height:1.6}
+.glow-art{min-height:270px;border-radius:22px;overflow:hidden;position:relative;background:radial-gradient(circle at 30% 30%,rgba(255,122,89,.35),transparent 25%),radial-gradient(circle at 75% 55%,rgba(138,126,245,.35),transparent 28%),linear-gradient(135deg,#292a4a,#6b62a0);animation:floatGlow 7s ease-in-out infinite alternate}
+.glow-art:after{content:"";position:absolute;width:130px;height:130px;border:1px solid rgba(255,255,255,.35);border-radius:38%;right:17%;top:25%;transform:rotate(25deg);box-shadow:0 0 55px rgba(255,255,255,.18)}
+@keyframes floatGlow{to{transform:translateY(-4px) scale(1.01)}}
+@media(max-width:800px){.studio-sidebar{position:fixed;left:-270px;transition:.25s}.studio-sidebar.open{left:0}.studio-main{padding:20px 14px 50px}.hero-studio{grid-template-columns:1fr}.studio-row{grid-template-columns:1fr}.mobile-menu{display:block}.studio-top h1{font-size:1.4rem}}
+</style>
+<script>
+window.addEventListener('load',()=>{const used=Number(localStorage.getItem('gw_image_used')||0);const count=document.getElementById('usageCount'),bar=document.getElementById('usageBar');if(count)count.textContent=Math.max(0,3-used)+'/3';if(bar)bar.style.width=Math.max(0,100-(used/3)*100)+'%';});
+</script>
+<script>if(typeof requireAuth==='function')requireAuth();</script></body></html>
