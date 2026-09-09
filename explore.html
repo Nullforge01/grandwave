@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Home — GrandWave</title>
+<title>Explore — GrandWave</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
@@ -128,8 +128,8 @@
       <a class="brand" href="home.html"><div class="brand-mark">GW</div>GrandWave</a>
       <div>
         <div class="nav-label">Navigate</div>
-        <a class="nav-item active" href="home.html">Home</a>
-        <a class="nav-item " href="explore.html">Explore</a>
+        <a class="nav-item " href="home.html">Home</a>
+        <a class="nav-item active" href="explore.html">Explore</a>
         <a class="nav-item " href="docs.html">Docs</a>
         <a class="nav-item " href="about.html">About</a>
         <a class="nav-item " href="contact.html">Contact</a>
@@ -140,53 +140,17 @@
     
 <main><div class="content">
 
-<section class="gw-hero gw-reveal">
-  <div class="gw-hero-copy">
-    <div class="gw-eyebrow">THE GRANDWAVE HUB</div>
-    <h1>Everything you need.<br>One GrandWave.</h1>
-    <p>Discover useful tools, creative AI, developer utilities and social experiences — designed to feel simple, fast and beautifully connected.</p>
-    <div class="gw-actions">
-      <a class="gw-primary" href="explore.html">Explore GrandWave</a>
-      <a class="gw-secondary" href="docs.html">Read the docs</a>
-    </div>
-    <div class="gw-stat-row">
-      <span class="gw-stat">Tech</span><span class="gw-stat">Social</span>
-      <span class="gw-stat">Entertainment</span><span class="gw-stat">More coming</span>
-    </div>
-  </div>
-</section>
-
-<section class="gw-section gw-reveal gw-delay-1">
-  <div class="gw-section-head"><div><h2>Featured</h2><p>Jump into the experiences people use most.</p></div></div>
-  <div class="gw-grid">
-    <a class="gw-card gw-feature" href="image-studio.html">
-      <div class="gw-icon">IS</div><h3>Image Studio</h3>
-      <p>Create, edit, enhance and transform images with AI. A cinematic creative workspace inside GrandWave.</p>
-      <span class="gw-arrow">Open →</span>
-    </a>
-    <a class="gw-card" href="apiverse-browse.html">
-      <div class="gw-icon">API</div><h3>API Verse</h3><p>Discover, test and explore useful APIs.</p><span class="gw-arrow">Open →</span>
-    </a>
-  </div>
-</section>
-
-<section class="gw-section gw-reveal gw-delay-2">
-  <div class="gw-section-head"><div><h2>Categories</h2><p>Everything is organized into one simple hub.</p></div></div>
-  <div class="gw-grid">
-    <a class="gw-card" href="tech.html"><div class="gw-icon">T</div><h3>Tech</h3><p>Developer tools, AI and APIs.</p><span class="gw-arrow">Explore →</span></a>
-    <a class="gw-card" href="social.html"><div class="gw-icon">S</div><h3>Social</h3><p>Tools for sharing and connecting.</p><span class="gw-arrow">Explore →</span></a>
-    <a class="gw-card" href="explore.html"><div class="gw-icon">+</div><h3>More experiences</h3><p>Explore what is new and what is coming next.</p><span class="gw-arrow">Explore →</span></a>
-  </div>
-</section>
-
-<section class="gw-section gw-reveal gw-delay-3">
-  <div class="gw-cinematic">
-    <div class="gw-eyebrow" style="color:rgba(255,255,255,.58)">A LIVING DIGITAL HUB</div>
-    <h2>Built to grow with you.</h2>
-    <p>GrandWave brings different experiences together without making the interface feel crowded. New tools can arrive without changing the way you navigate.</p>
-    <a class="gw-secondary" href="explore.html">Explore everything</a>
-  </div>
-</section>
+<div class="page-head gw-reveal"><h1>Explore GrandWave</h1><p>Find tools, experiences and new releases.</p></div>
+<div class="gw-section gw-reveal gw-delay-1">
+  <input class="gw-search" id="toolSearch" placeholder="Search tools and experiences..." autocomplete="off">
+</div>
+<div class="gw-section gw-grid" id="toolGrid">
+  <a class="gw-card" data-name="image studio ai images" href="image-studio.html"><div class="gw-icon">IS</div><h3>Image Studio</h3><p>AI image creation, editing, enhancement and more.</p></a>
+  <a class="gw-card" data-name="api verse api developer" href="apiverse-browse.html"><div class="gw-icon">API</div><h3>API Verse</h3><p>Explore APIs and developer resources.</p></a>
+  <a class="gw-card" data-name="translator translation ai" href="tech-translator.html"><div class="gw-icon">TR</div><h3>AI Translator</h3><p>Fast context-aware translation.</p></a>
+  <a class="gw-card" data-name="probe host dns ip security" href="tech-probehost.html"><div class="gw-icon">PH</div><h3>Probe Host</h3><p>DNS, IP and host intelligence.</p></a>
+  <a class="gw-card" data-name="linkhub social links" href="social.html"><div class="gw-icon">LH</div><h3>LinkHub Pro</h3><p>Keep your links organized in one place.</p></a>
+</div>
 
 <footer class="gw-footer">
   <div class="gw-footer-inner">
@@ -202,6 +166,9 @@
 <script>
 requireAuth().then((session)=>{if(session) document.getElementById('appShell').style.display='flex';});
 async function signOut(){await sb.auth.signOut();window.location.href='login.html';}
+
+const input=document.getElementById('toolSearch');
+input?.addEventListener('input',()=>{const q=input.value.toLowerCase().trim();document.querySelectorAll('#toolGrid .gw-card').forEach(c=>c.style.display=!q||c.dataset.name.includes(q)?'':'none')});
 
 </script>
 </body></html>
