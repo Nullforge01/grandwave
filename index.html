@@ -2,15 +2,130 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>GrandWave</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="js/supabase-client.js"></script>
+
+<style>
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  width:100%;
+  min-height:100%;
+  font-family:Quicksand,Nunito,Arial,sans-serif;
+}
+
+body{
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 15% 20%,rgba(255,170,160,.5),transparent 30%),
+    radial-gradient(circle at 85% 15%,rgba(130,205,255,.45),transparent 30%),
+    radial-gradient(circle at 55% 90%,rgba(190,160,255,.38),transparent 35%),
+    #f7f8fc;
+}
+
+.loader{
+  width:min(90%,420px);
+  padding:42px 30px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.8);
+  border-radius:30px;
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  box-shadow:0 25px 80px rgba(55,50,90,.14);
+  animation:enter .7s ease forwards;
+}
+
+.logo{
+  width:68px;
+  height:68px;
+  margin:0 auto 20px;
+  display:grid;
+  place-items:center;
+  border-radius:21px;
+  color:white;
+  font-size:18px;
+  font-weight:800;
+  background:linear-gradient(135deg,#6750A4,#8b73c9);
+  box-shadow:0 15px 35px rgba(103,80,164,.3);
+  animation:pulse 2s ease-in-out infinite;
+}
+
+h1{
+  margin:0;
+  color:#20213a;
+  font-size:28px;
+  letter-spacing:-.04em;
+}
+
+p{
+  margin:8px 0 24px;
+  color:#747489;
+  font-size:14px;
+}
+
+.progress{
+  width:100%;
+  height:4px;
+  overflow:hidden;
+  border-radius:10px;
+  background:rgba(103,80,164,.1);
+}
+
+.progress span{
+  display:block;
+  width:35%;
+  height:100%;
+  border-radius:10px;
+  background:#6750A4;
+  animation:load 1.3s ease-in-out infinite;
+}
+
+@keyframes enter{
+  from{opacity:0;transform:translateY(15px) scale(.98)}
+  to{opacity:1;transform:none}
+}
+
+@keyframes pulse{
+  50%{transform:scale(1.06);box-shadow:0 20px 45px rgba(103,80,164,.38)}
+}
+
+@keyframes load{
+  0%{transform:translateX(-130%)}
+  100%{transform:translateX(380%)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important}
+}
+</style>
 </head>
+
 <body>
+
+<div class="loader">
+  <div class="logo">GW</div>
+  <h1>GrandWave</h1>
+  <p>Preparing your experience...</p>
+
+  <div class="progress">
+    <span></span>
+  </div>
+</div>
+
 <script>
-  sb.auth.getSession().then(({ data }) => {
-    window.location.href = data.session ? "home.html" : "login.html";
-  });
+sb.auth.getSession().then(({ data }) => {
+  window.location.href = data.session
+    ? "home.html"
+    : "login.html";
+});
 </script>
+
 </body>
 </html>
