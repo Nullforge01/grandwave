@@ -1,39 +1,208 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en">
+<head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>GrandWave</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Home — GrandWave</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script><script src="js/supabase-client.js"></script><script src="js/auth-guard.js"></script>
 <style>
-.gw{--p:#6750A4;--ink:#20213a;--muted:#686980}.gw-layout{display:flex;min-height:100vh}.gw-side{width:245px;padding:18px 14px;position:sticky;top:0;height:100vh;z-index:10}.gw-sidebox{height:100%;padding:18px 12px;display:flex;flex-direction:column;border-radius:27px;background:rgba(255,255,255,.52);border:1px solid rgba(255,255,255,.8);backdrop-filter:blur(24px);box-shadow:0 18px 55px rgba(55,50,90,.11)}.gw-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800;font-size:20px;padding:4px 8px 22px}.gw-mark{width:39px;height:39px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(135deg,#6750A4,#9078ce);color:#fff;font-size:12px;box-shadow:0 10px 25px #6750A433}.gw-label{font-size:10px;font-weight:800;letter-spacing:.14em;color:#9491a3;padding:8px 10px}.gw-link{display:flex;align-items:center;gap:10px;padding:12px;border-radius:15px;color:#57566a;text-decoration:none;font-size:14px;font-weight:700;transition:.2s}.gw-link:hover,.gw-link.active{background:#ffffffa8;color:var(--p);transform:translateX(3px)}.gw-ai{margin-left:auto;font-size:9px;padding:4px 6px;border-radius:99px;background:#6750A414}.gw-sign{margin-top:auto;border:0;padding:12px;border-radius:14px;background:#ffffff8c;color:#5d5b70;font:inherit;font-weight:700}.gw-main{flex:1;min-width:0}.gw-content{max-width:1200px;margin:auto;padding:28px}.gw-mobile{display:none}.gw-hero{position:relative;overflow:hidden;min-height:390px;padding:48px;border-radius:34px;display:flex;align-items:center;background:radial-gradient(circle at 12% 18%,#ffaaa080,transparent 31%),radial-gradient(circle at 90% 8%,#82cdff70,transparent 31%),radial-gradient(circle at 70% 100%,#bea0ff62,transparent 34%),#ffffff8c;border:1px solid #ffffffcc;box-shadow:0 25px 75px #37325f1f}.gw-hero:after{content:"";position:absolute;width:320px;height:320px;right:-80px;bottom:-150px;border-radius:50%;background:#ffffff55;animation:gwfloat 8s ease-in-out infinite}.gw-copy{position:relative;z-index:1;max-width:700px}.gw-kicker{font-size:11px;font-weight:800;letter-spacing:.17em;color:#77758a}.gw-hero h1{margin:10px 0 15px;color:var(--ink);font-size:clamp(40px,6vw,68px);line-height:.98;letter-spacing:-.055em}.gw-hero p{max-width:650px;color:var(--muted);font-size:17px;line-height:1.65}.gw-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.gw-btn{padding:13px 18px;border-radius:15px;text-decoration:none;font-weight:800;display:inline-block;transition:.18s}.gw-btn:active,.gw-card:active{transform:scale(.965)}.gw-primary{background:#6750A4;color:#fff;box-shadow:0 12px 28px #6750A43d}.gw-secondary{background:#ffffffb3;color:#403b58;border:1px solid #ffffffd9}.gw-section{margin-top:32px}.gw-head{margin-bottom:14px}.gw-head h2{margin:0;color:var(--ink);font-size:23px}.gw-head p{margin:4px 0;color:var(--muted)}.gw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.gw-card{position:relative;overflow:hidden;min-height:155px;padding:21px;border-radius:23px;background:#ffffff8f;border:1px solid #ffffffc7;box-shadow:0 14px 42px #37325f14;text-decoration:none;color:inherit;transition:transform .22s,box-shadow .22s}.gw-card:hover{transform:translateY(-5px);box-shadow:0 25px 60px #37325f20}.gw-card:after{content:"";position:absolute;top:-80%;left:-40%;width:35%;height:260%;background:#ffffff55;transform:rotate(22deg);animation:gwshine 8s linear infinite}.gw-icon{width:45px;height:45px;display:grid;place-items:center;border-radius:14px;background:#6750A417;color:var(--p);font-weight:800;margin-bottom:15px}.gw-card h3{margin:0 0 7px;color:var(--ink);font-size:17px}.gw-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}.gw-arrow{position:absolute;right:17px;bottom:16px;color:var(--p);font-weight:900}.gw-wide{grid-column:span 2}.gw-soon{opacity:.83}.gw-soon small{font-size:9px;letter-spacing:.08em;color:#8b879a;background:#ffffff80;padding:4px 6px;border-radius:99px}.gw-cinema{position:relative;overflow:hidden;border-radius:27px;padding:29px;color:#fff;background:linear-gradient(120deg,#171927,#42355f 60%,#264c63);box-shadow:0 25px 70px #1c193233}.gw-cinema:before{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,#ffffff1c,transparent 60%);animation:gwsweep 6s infinite}.gw-cinema>*{position:relative}.gw-cinema h2{font-size:29px;margin:0 0 8px}.gw-cinema p{max-width:650px;line-height:1.6;color:#ffffffb8}.gw-footer{margin-top:48px;padding:28px 2px;border-top:1px solid #5a55731f;color:#77758a}.gw-footer-row{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}.gw-footer a{color:inherit;text-decoration:none;margin-right:14px}.gw-footer a:hover{color:var(--p)}.gw-reveal{opacity:0;transform:translateY(14px);animation:gwreveal .65s ease forwards}.d1{animation-delay:.08s}.d2{animation-delay:.16s}.d3{animation-delay:.24s}
-@keyframes gwreveal{to{opacity:1;transform:none}}@keyframes gwfloat{50%{transform:translate(-15px,-18px) scale(1.05)}}@keyframes gwshine{0%,65%{left:-60%}100%{left:150%}}@keyframes gwsweep{0%,100%{transform:translateX(-30%)}50%{transform:translateX(30%)}}
-@media(max-width:860px){.gw-side{display:none}.gw-mobile{display:flex;align-items:center;justify-content:space-between;padding:14px 16px}.gw-content{padding:10px 16px 28px}.gw-hero{padding:32px 24px;min-height:390px}.gw-grid{grid-template-columns:1fr}.gw-wide{grid-column:span 1}.gw-menu{border:0;border-radius:12px;padding:10px;background:#ffffffa8;font-weight:800}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style></head>
-<body><div class="gw gw-layout" id="appShell" style="display:none">
-<aside class="gw-side"><div class="gw-sidebox">
-<a class="gw-logo" href="home.html"><span class="gw-mark">GW</span>GrandWave</a>
-<div class="gw-label">FEATURES</div>
-<a class="gw-link active" href="home.html">⌂ <span>Home</span></a><a class="gw-link" href="explore.html">⌕ <span>Explore</span></a>
-<a class="gw-link" href="image-studio.html">✦ <span>Image Studio</span><span class="gw-ai">AI</span></a><a class="gw-link" href="apiverse-browse.html">⌘ <span>API Verse</span></a><a class="gw-link" href="tech-translator.html">Aa <span>AI Translator</span></a><a class="gw-link" href="tech-probehost.html">⌁ <span>Probe Host</span></a>
-<div class="gw-label" style="margin-top:8px">ACCOUNT</div><a class="gw-link" href="profile.html">◎ <span>Profile</span></a><a class="gw-link" href="docs.html">▤ <span>Docs</span></a>
-<button class="gw-sign" onclick="signOut()">Sign out</button></div></aside>
-<main class="gw-main"><div class="gw-mobile"><a class="gw-logo" href="home.html" style="padding:0"><span class="gw-mark">GW</span>GrandWave</a><button class="gw-menu" onclick="document.querySelector('.gw-side').style.display='block'">Menu</button></div>
-<div class="gw-content">
-<section class="gw-hero gw-reveal"><div class="gw-copy"><div class="gw-kicker">WELCOME TO GRANDWAVE</div><h1>Welcome to<br>GrandWave.</h1><p>One friendly hub for everything mighty. Explore powerful tools, creative experiences and useful services — all in one place.</p><div class="gw-actions"><a class="gw-btn gw-primary" href="explore.html">Explore GrandWave</a><a class="gw-btn gw-secondary" href="docs.html">View Docs</a></div></div></section>
-<section class="gw-section gw-reveal d1"><div class="gw-head"><h2>Featured</h2><p>Explore what's available now.</p></div><div class="gw-grid">
-<a class="gw-card gw-wide" href="image-studio.html"><div class="gw-icon">IS</div><h3>Image Studio</h3><p>Create, edit, enhance and transform images with AI.</p><span class="gw-arrow">Open →</span></a>
-<a class="gw-card" href="apiverse-browse.html"><div class="gw-icon">API</div><h3>API Verse</h3><p>Discover and explore useful APIs.</p><span class="gw-arrow">Open →</span></a></div></section>
-<section class="gw-section gw-reveal d2"><div class="gw-head"><h2>Categories</h2><p>Your original GrandWave categories, upgraded — not replaced.</p></div><div class="gw-grid">
-<a class="gw-card" href="tech.html"><div class="gw-icon">T</div><h3>Tech</h3><p>AI, developer tools, APIs and technology.</p><span class="gw-arrow">Explore →</span></a>
-<a class="gw-card" href="social.html"><div class="gw-icon">S</div><h3>Social</h3><p>Social tools and experiences.</p><span class="gw-arrow">Explore →</span></a>
-<div class="gw-card gw-soon"><div class="gw-icon">E</div><h3>Entertainment <small>SOON</small></h3><p>Entertainment experiences are coming.</p></div>
-<div class="gw-card gw-soon"><div class="gw-icon">P</div><h3>Productivity <small>SOON</small></h3><p>Tools to help you get more done.</p></div>
-<div class="gw-card gw-soon"><div class="gw-icon">L</div><h3>Local <small>SOON</small></h3><p>Useful local experiences are coming.</p></div>
-</div></section>
-<section class="gw-section gw-reveal d3"><div class="gw-cinema"><div class="gw-kicker" style="color:#ffffff8c">THE GRANDWAVE EXPERIENCE</div><h2>More is coming to the wave.</h2><p>GrandWave is growing while keeping the original experience familiar, simple and easy to navigate.</p><a class="gw-btn gw-secondary" href="explore.html">Explore GrandWave</a></div></section>
-<footer class="gw-footer"><div class="gw-footer-row"><div><strong>GrandWave</strong><br><span>One friendly hub for everything mighty.</span></div><div><a href="docs.html">Docs</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div><div>Built by <strong>Wild Lirt Studio</strong></div></div></footer>
+/* GrandWave homepage enhancement layer.
+   Uses the existing css/styles.css as the main design system. */
+
+.gw-enhance{
+  --gw-ink:#20213a;
+  --gw-muted:#66677f;
+  --gw-glass:rgba(255,255,255,.64);
+  --gw-border:rgba(255,255,255,.72);
+  --gw-shadow:0 22px 70px rgba(58,55,95,.12);
+}
+.gw-hero{
+  position:relative; overflow:hidden; border-radius:34px; padding:48px;
+  min-height:390px; display:flex; align-items:center;
+  background:
+    radial-gradient(circle at 12% 18%,rgba(255,170,160,.48),transparent 32%),
+    radial-gradient(circle at 90% 10%,rgba(130,205,255,.45),transparent 32%),
+    radial-gradient(circle at 72% 90%,rgba(190,160,255,.34),transparent 36%),
+    rgba(255,255,255,.55);
+  border:1px solid var(--gw-border); box-shadow:var(--gw-shadow);
+}
+.gw-hero:before,.gw-hero:after{
+  content:"";position:absolute;border-radius:50%;filter:blur(8px);pointer-events:none;
+}
+.gw-hero:before{width:180px;height:180px;right:8%;top:-55px;background:rgba(255,255,255,.48);animation:gwFloat 8s ease-in-out infinite}
+.gw-hero:after{width:120px;height:120px;left:45%;bottom:-45px;background:rgba(170,220,255,.25);animation:gwFloat 10s ease-in-out infinite reverse}
+.gw-hero-copy{position:relative;z-index:2;max-width:720px}
+.gw-eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#77708f;margin-bottom:14px}
+.gw-hero h1{font-size:clamp(38px,6vw,70px);line-height:.98;letter-spacing:-.055em;margin:0 0 18px;color:var(--gw-ink)}
+.gw-hero p{font-size:18px;line-height:1.65;color:var(--gw-muted);max-width:620px;margin:0 0 26px}
+.gw-actions{display:flex;gap:12px;flex-wrap:wrap}
+.gw-primary,.gw-secondary{
+  border:0;border-radius:16px;padding:13px 18px;font:inherit;font-weight:800;
+  text-decoration:none;display:inline-flex;align-items:center;justify-content:center;
+  transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+}
+.gw-primary{background:#6750A4;color:#fff;box-shadow:0 12px 28px rgba(103,80,164,.25)}
+.gw-secondary{background:rgba(255,255,255,.72);color:#302c47;border:1px solid rgba(103,80,164,.13)}
+.gw-primary:hover,.gw-secondary:hover{transform:translateY(-2px)}
+.gw-primary:active,.gw-secondary:active,.gw-card:active{transform:scale(.975)}
+.gw-section{margin-top:34px}
+.gw-section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:14px}
+.gw-section-head h2{margin:0;color:var(--gw-ink);font-size:23px}
+.gw-section-head p{margin:4px 0 0;color:var(--gw-muted)}
+.gw-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.gw-card{
+  position:relative;overflow:hidden;border-radius:24px;padding:22px;
+  background:var(--gw-glass);border:1px solid var(--gw-border);
+  box-shadow:0 14px 40px rgba(60,55,90,.08);
+  text-decoration:none;color:inherit;transition:transform .22s ease,box-shadow .22s ease,background .22s ease;
+}
+.gw-card:hover{transform:translateY(-5px);box-shadow:0 24px 60px rgba(60,55,90,.13);background:rgba(255,255,255,.78)}
+.gw-card:after{content:"";position:absolute;inset:-40%;background:linear-gradient(120deg,transparent 42%,rgba(255,255,255,.34) 50%,transparent 58%);transform:translateX(-60%) rotate(8deg);transition:transform .7s ease}
+.gw-card:hover:after{transform:translateX(60%) rotate(8deg)}
+.gw-icon{
+  width:46px;height:46px;border-radius:15px;display:grid;place-items:center;
+  background:linear-gradient(135deg,rgba(103,80,164,.16),rgba(80,190,220,.13));
+  color:#6750A4;margin-bottom:17px;
+}
+.gw-card h3{margin:0 0 7px;font-size:18px;color:var(--gw-ink)}
+.gw-card p{margin:0;color:var(--gw-muted);line-height:1.55}
+.gw-arrow{position:absolute;right:18px;bottom:18px;color:#6750A4;font-weight:900}
+.gw-feature{grid-column:span 2;min-height:190px}
+.gw-feature .gw-icon{background:linear-gradient(135deg,rgba(255,160,145,.25),rgba(125,185,255,.25))}
+.gw-stat-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.gw-stat{padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.54);border:1px solid rgba(255,255,255,.8);font-size:12px;font-weight:800;color:#5c5a70}
+.gw-cinematic{
+  min-height:220px;border-radius:26px;padding:25px;position:relative;overflow:hidden;
+  background:
+    linear-gradient(125deg,rgba(18,21,35,.88),rgba(51,38,77,.68)),
+    radial-gradient(circle at 75% 20%,rgba(128,224,255,.5),transparent 28%);
+  color:white;box-shadow:0 25px 70px rgba(30,25,55,.22);
+}
+.gw-cinematic:before{
+  content:"";position:absolute;inset:0;background:
+  linear-gradient(110deg,transparent 0 38%,rgba(255,255,255,.09) 48%,transparent 58%),
+  radial-gradient(circle at 75% 75%,rgba(255,130,185,.18),transparent 30%);
+  animation:gwSweep 7s ease-in-out infinite;
+}
+.gw-cinematic>*{position:relative;z-index:1}
+.gw-cinematic h2{font-size:29px;margin:0 0 8px}
+.gw-cinematic p{color:rgba(255,255,255,.74);max-width:560px;line-height:1.6}
+.gw-footer{margin-top:55px;padding:30px 0 18px;border-top:1px solid rgba(100,95,125,.12);color:#77758a}
+.gw-footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.gw-footer a{color:inherit;text-decoration:none;margin-right:15px}
+.gw-footer a:hover{color:#6750A4}
+.gw-reveal{opacity:0;transform:translateY(16px);animation:gwReveal .7s cubic-bezier(.2,.75,.25,1) forwards}
+.gw-delay-1{animation-delay:.08s}.gw-delay-2{animation-delay:.16s}.gw-delay-3{animation-delay:.24s}.gw-delay-4{animation-delay:.32s}
+.gw-mobile-only{display:none}
+.gw-page-card{max-width:920px;margin:auto;padding:34px;border-radius:28px;background:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.78);box-shadow:var(--gw-shadow)}
+.gw-page-card h1{color:var(--gw-ink);font-size:clamp(30px,5vw,52px);margin:0 0 12px}
+.gw-page-card h2{color:var(--gw-ink);margin-top:28px}
+.gw-page-card p,.gw-page-card li{color:var(--gw-muted);line-height:1.75}
+.gw-page-card ul{padding-left:20px}
+.gw-404{text-align:center;max-width:720px;margin:7vh auto}
+.gw-404 .code{font-size:clamp(90px,18vw,180px);font-weight:900;letter-spacing:-.08em;color:#6750A4;line-height:.8}
+.gw-search{width:100%;max-width:620px;border:1px solid rgba(103,80,164,.13);background:rgba(255,255,255,.72);border-radius:18px;padding:15px 17px;font:inherit;outline:none}
+.gw-search:focus{box-shadow:0 0 0 4px rgba(103,80,164,.1)}
+@keyframes gwFloat{50%{transform:translate3d(-15px,18px,0) scale(1.05)}}
+@keyframes gwSweep{0%,100%{transform:translateX(-18%)}50%{transform:translateX(18%)}}
+@keyframes gwReveal{to{opacity:1;transform:none}}
+@media(max-width:860px){
+  .gw-hero{padding:31px 24px;min-height:360px;border-radius:28px}
+  .gw-grid{grid-template-columns:1fr}
+  .gw-feature{grid-column:span 1}
+  .gw-mobile-only{display:block}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/auth-guard.js"></script>
+</head>
+<body>
+<div class="app-shell gw-enhance" id="appShell" style="display:none">
+
+    <aside class="sidebar">
+      <a class="brand" href="home.html"><div class="brand-mark">GW</div>GrandWave</a>
+      <div>
+        <div class="nav-label">Navigate</div>
+        <a class="nav-item active" href="home.html">Home</a>
+        <a class="nav-item " href="explore.html">Explore</a>
+        <a class="nav-item " href="docs.html">Docs</a>
+        <a class="nav-item " href="about.html">About</a>
+        <a class="nav-item " href="contact.html">Contact</a>
+        <a class="nav-item " href="profile.html">Profile</a>
+      </div>
+      <button class="sign-out-btn" onclick="signOut()">Sign out</button>
+    </aside>
+    
+<main><div class="content">
+
+<section class="gw-hero gw-reveal">
+  <div class="gw-hero-copy">
+    <div class="gw-eyebrow">THE GRANDWAVE HUB</div>
+    <h1>Everything you need.<br>One GrandWave.</h1>
+    <p>Discover useful tools, creative AI, developer utilities and social experiences — designed to feel simple, fast and beautifully connected.</p>
+    <div class="gw-actions">
+      <a class="gw-primary" href="explore.html">Explore GrandWave</a>
+      <a class="gw-secondary" href="docs.html">Read the docs</a>
+    </div>
+    <div class="gw-stat-row">
+      <span class="gw-stat">Tech</span><span class="gw-stat">Social</span>
+      <span class="gw-stat">Entertainment</span><span class="gw-stat">More coming</span>
+    </div>
+  </div>
+</section>
+
+<section class="gw-section gw-reveal gw-delay-1">
+  <div class="gw-section-head"><div><h2>Featured</h2><p>Jump into the experiences people use most.</p></div></div>
+  <div class="gw-grid">
+    <a class="gw-card gw-feature" href="image-studio.html">
+      <div class="gw-icon">IS</div><h3>Image Studio</h3>
+      <p>Create, edit, enhance and transform images with AI. A cinematic creative workspace inside GrandWave.</p>
+      <span class="gw-arrow">Open →</span>
+    </a>
+    <a class="gw-card" href="apiverse-browse.html">
+      <div class="gw-icon">API</div><h3>API Verse</h3><p>Discover, test and explore useful APIs.</p><span class="gw-arrow">Open →</span>
+    </a>
+  </div>
+</section>
+
+<section class="gw-section gw-reveal gw-delay-2">
+  <div class="gw-section-head"><div><h2>Categories</h2><p>Everything is organized into one simple hub.</p></div></div>
+  <div class="gw-grid">
+    <a class="gw-card" href="tech.html"><div class="gw-icon">T</div><h3>Tech</h3><p>Developer tools, AI and APIs.</p><span class="gw-arrow">Explore →</span></a>
+    <a class="gw-card" href="social.html"><div class="gw-icon">S</div><h3>Social</h3><p>Tools for sharing and connecting.</p><span class="gw-arrow">Explore →</span></a>
+    <a class="gw-card" href="entertainment.html"><div class="gw-icon">E</div><h3>Entertainment</h3><p>Movies & TV today, with more entertainment experiences coming soon.</p><span class="gw-arrow">Explore →</span></a>
+    <a class="gw-card" href="explore.html"><div class="gw-icon">+</div><h3>More experiences</h3><p>Explore what is new and what is coming next.</p><span class="gw-arrow">Explore →</span></a>
+  </div>
+</section>
+
+<section class="gw-section gw-reveal gw-delay-3">
+  <div class="gw-cinematic">
+    <div class="gw-eyebrow" style="color:rgba(255,255,255,.58)">A LIVING DIGITAL HUB</div>
+    <h2>Built to grow with you.</h2>
+    <p>GrandWave brings different experiences together without making the interface feel crowded. New tools can arrive without changing the way you navigate.</p>
+    <a class="gw-secondary" href="explore.html">Explore everything</a>
+  </div>
+</section>
+
+<footer class="gw-footer">
+  <div class="gw-footer-inner">
+    <div><strong>GrandWave</strong><br><span>One friendly hub for powerful tools.</span></div>
+    <div>
+      <a href="docs.html">Docs</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy</a><a href="terms.html">Terms</a>
+    </div>
+    <div>Built with care by <strong>Wild Lirt Studio</strong></div>
+  </div>
+</footer>
 </div></main></div>
-<script>requireAuth().then(s=>{if(s)document.getElementById('appShell').style.display='flex'});async function signOut(){await sb.auth.signOut();location.href='login.html'}</script>
+<script>
+requireAuth().then((session)=>{if(session) document.getElementById('appShell').style.display='flex';});
+async function signOut(){await sb.auth.signOut();window.location.href='login.html';}
+
+</script>
 </body></html>
