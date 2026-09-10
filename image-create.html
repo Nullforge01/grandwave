@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Create — GrandWave</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/styles.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script><script src="js/supabase-client.js"></script><script src="js/auth-guard.js"></script></head><body>
+<div class="studio-shell">
+<aside class="studio-sidebar">
+<a class="studio-brand" href="tech.html"><span class="studio-brand-mark">G</span><span>GrandWave<small>Image Studio</small></span></a>
+<nav><div class="studio-nav-label">Workspace</div><a class="studio-nav " href="image-studio.html"><span>⌂</span>Studio</a><a class="studio-nav active" href="image-create.html"><span>✦</span>Create</a><a class="studio-nav " href="image-edit.html"><span>✎</span>Edit</a><a class="studio-nav " href="image-enhance.html"><span>↗</span>Enhance</a><a class="studio-nav " href="image-poster.html"><span>▣</span>Poster</a><a class="studio-nav " href="image-logo.html"><span>◇</span>Logo</a><a class="studio-nav " href="image-templates.html"><span>▤</span>Templates</a><a class="studio-nav " href="image-projects.html"><span>▦</span>Projects</a><a class="studio-nav " href="image-history.html"><span>◷</span>History</a></nav>
+<div class="studio-side-bottom">
+<div class="usage-mini"><div><b>Free generations</b><span id="usageCount">3/3</span></div><div class="usage-bar"><i id="usageBar"></i></div><small id="usageHint">Daily limit is secured by your account.</small></div>
+<a href="tech.html" class="back-grandwave">← Back to GrandWave</a>
+</div></aside>
+<main class="studio-main">
+<header class="studio-top"><div><div class="eyebrow">IMAGE STUDIO</div><h1>Create</h1><p>Generate images from natural-language prompts.</p></div><button class="mobile-menu" onclick="document.querySelector('.studio-sidebar').classList.toggle('open')">☰</button></header>
+<div class="studio-wrap"><div class="studio-card"><div class="studio-form">
+<div><label>Describe your image</label><textarea id="prompt" placeholder="A cinematic night-time city street after rain, realistic photography, dramatic reflections..."></textarea></div>
+<div class="studio-row"><div><label>Style</label><select id="style"><option>Photorealistic</option><option>Cinematic</option><option>Editorial</option><option>3D Render</option><option>Illustration</option></select></div><div><label>Aspect ratio</label><select id="aspectRatio"><option>1:1 Square</option><option>16:9 Landscape</option><option>9:16 Portrait</option><option>4:5 Social</option></select></div><div><label>Quality</label><select id="quality"><option>Standard</option><option>High</option><option>Ultra</option></select></div></div>
+<div class="studio-actions"><button id="generateBtn" class="studio-btn" onclick="generateImage()">Generate image</button><button id="surpriseBtn" class="studio-btn secondary" onclick="surpriseMe()">Surprise me</button></div>
+<div class="studio-note" id="generationStatus">API keys stay server-side. Your request is securely routed through the GrandWave/Supabase generation endpoint.</div>
+<div class="preview" id="preview"><div><strong>Your creation will appear here</strong><p>Enter a prompt and start creating.</p></div></div>
+</div></div></div>
+</main></div>
+
+<style>
+.studio-shell{min-height:100vh;display:flex;background:radial-gradient(circle at 80% 10%,rgba(138,126,245,.13),transparent 35%),radial-gradient(circle at 10% 90%,rgba(47,216,198,.11),transparent 35%),#fbfaff}
+.studio-sidebar{width:250px;flex-shrink:0;position:sticky;top:0;height:100vh;padding:22px 14px;display:flex;flex-direction:column;background:rgba(255,255,255,.58);backdrop-filter:blur(22px);border-right:1px solid rgba(255,255,255,.75);z-index:20}
+.studio-brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--font-display);font-weight:700;font-size:1rem;padding:3px 8px 22px}
+.studio-brand small{display:block;color:var(--text-dim);font:600 .62rem var(--font-body);margin-top:2px}
+.studio-brand-mark{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;color:white;background:linear-gradient(135deg,var(--coral),var(--lav));box-shadow:0 7px 20px rgba(138,126,245,.28)}
+.studio-nav-label,.eyebrow{font:700 .64rem var(--font-mono);letter-spacing:.12em;color:#9694b8;text-transform:uppercase}
+.studio-nav-label{padding:10px}
+.studio-nav{display:flex;align-items:center;gap:10px;text-decoration:none;color:#6c6a93;font-weight:700;font-size:.82rem;padding:10px;border-radius:13px;margin:2px 0;transition:.2s}
+.studio-nav:hover{background:rgba(255,255,255,.7);transform:translateX(3px)}
+.studio-nav.active{background:var(--lav-soft);color:#6657c9}
+.studio-nav span{width:22px;text-align:center;font-size:1rem}
+.studio-side-bottom{margin-top:auto}.usage-mini{padding:13px;border:1px solid var(--glass-border);border-radius:16px;background:rgba(255,255,255,.42);font-size:.72rem}
+.usage-mini>div:first-child{display:flex;justify-content:space-between;margin-bottom:8px}.usage-mini span{color:var(--lav);font-weight:800}.usage-bar{height:5px;background:rgba(138,126,245,.12);border-radius:10px;overflow:hidden}.usage-bar i{display:block;width:100%;height:100%;background:linear-gradient(90deg,var(--coral),var(--lav));border-radius:10px;transition:width .35s ease}.usage-mini small{display:block;color:var(--text-dim);margin-top:7px}
+.back-grandwave{display:block;text-decoration:none;color:var(--text-dim);font-size:.74rem;font-weight:700;padding:13px 8px}
+.studio-main{flex:1;min-width:0;padding:34px clamp(18px,4vw,54px) 70px}
+.studio-top{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:26px}
+.studio-top h1{font:700 1.7rem var(--font-display);margin:7px 0 4px}.studio-top p{color:var(--text-dim);font-size:.88rem}
+.mobile-menu{display:none;border:0;background:var(--glass-bg);border-radius:12px;padding:10px}
+.studio-wrap{max-width:1100px;margin:auto}.studio-card{background:rgba(255,255,255,.57);backdrop-filter:blur(18px);border:1px solid var(--glass-border);box-shadow:var(--glass-shadow);border-radius:22px;padding:22px}
+.studio-form{display:grid;gap:14px}.studio-form label{margin:0}.studio-form textarea{min-height:150px}
+.studio-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.studio-row select{margin:0}
+.studio-btn{border:0;border-radius:999px;padding:12px 20px;color:white;font:700 .86rem var(--font-display);background:linear-gradient(135deg,var(--coral),var(--lav));box-shadow:0 8px 20px rgba(138,126,245,.24);cursor:pointer;transition:transform .18s ease,opacity .18s ease,box-shadow .18s ease}
+.studio-btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(138,126,245,.3)}
+.studio-btn:active{transform:scale(.98)}.studio-btn:disabled{opacity:.65;cursor:wait;transform:none}
+.studio-btn.secondary{background:rgba(255,255,255,.55);color:var(--ink);box-shadow:none;border:1px solid var(--glass-border)}
+.studio-actions{display:flex;gap:9px;flex-wrap:wrap}.studio-note{color:var(--text-dim);font-size:.74rem;line-height:1.5;min-height:18px}
+.preview{min-height:260px;border:1.5px dashed rgba(138,126,245,.3);border-radius:20px;display:grid;place-items:center;text-align:center;padding:30px;background:linear-gradient(135deg,rgba(138,126,245,.06),rgba(47,216,198,.05));overflow:hidden}
+.preview strong{font-family:var(--font-display)}.preview p{font-size:.76rem;color:var(--text-dim);max-width:430px;margin:7px auto}
+.preview-image{width:100%;max-height:720px;object-fit:contain;border-radius:16px;display:block;box-shadow:0 18px 45px rgba(70,60,130,.14);animation:imageReveal .5s ease both}
+.preview-toolbar{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.preview-link{display:inline-block;text-decoration:none;border-radius:999px;padding:10px 16px;font:700 .78rem var(--font-display);background:linear-gradient(135deg,var(--coral),var(--lav));color:#fff}
+.preview-link.alt{background:rgba(255,255,255,.65);color:var(--ink);border:1px solid var(--glass-border)}
+.loading-ring{width:34px;height:34px;border:3px solid rgba(138,126,245,.18);border-top-color:var(--lav);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes imageReveal{from{opacity:0;filter:blur(12px);transform:scale(.985)}to{opacity:1;filter:blur(0);transform:scale(1)}}
+@media(max-width:800px){.studio-sidebar{position:fixed;left:-270px;transition:.25s}.studio-sidebar.open{left:0}.studio-main{padding:20px 14px 50px}.studio-row{grid-template-columns:1fr}.mobile-menu{display:block}.studio-top h1{font-size:1.4rem}}
+</style>
+
+<script src="js/image-studio.js"></script>
+<script>if(typeof requireAuth==='function')requireAuth();</script>
+</body></html>
