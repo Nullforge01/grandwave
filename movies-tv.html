@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movies & TV — GrandWave</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<style>
+/* Movies & TV layer — uses the original GrandWave UI underneath. */
+.movies-app{display:flex;min-height:100vh}.movies-app .sidebar{z-index:5}.movies-main{flex:1;min-width:0}.movies-top{display:flex;gap:10px;align-items:center;padding:16px 24px;background:var(--glass-bg);backdrop-filter:blur(20px) saturate(160%);border-bottom:1px solid var(--glass-border);position:sticky;top:0;z-index:4}.movies-top input{flex:1;margin:0;max-width:620px}.movies-btn{border:0;border-radius:999px;padding:10px 16px;background:var(--coral);color:#fff;font-weight:800;cursor:pointer}.movies-btn.secondary{background:var(--lav-soft);color:var(--lav)}.movies-wrap{max-width:1100px;margin:auto;padding:24px}.movies-title{margin-bottom:20px}.movies-title h1{font-family:var(--font-display);font-size:1.7rem;margin-bottom:4px}.movies-title p{color:var(--text-dim)}.hero{position:relative;min-height:340px;border-radius:24px;overflow:hidden;margin-bottom:28px;background:#292A4A center/cover no-repeat;box-shadow:var(--glass-shadow)}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,20,35,.9),rgba(20,20,35,.35),rgba(20,20,35,.1))}.hero-content{position:absolute;z-index:1;left:28px;bottom:28px;max-width:620px;color:#fff}.hero-content h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.4rem);margin:5px 0 8px}.hero-content p{line-height:1.55;color:rgba(255,255,255,.78)}.eyebrow{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;font-weight:700;color:rgba(255,255,255,.65)}.meta{font-size:.8rem;color:rgba(255,255,255,.72);margin-bottom:12px}.hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}.hero-actions button,.back{border:0;border-radius:999px;padding:10px 15px;font-weight:800;cursor:pointer}.hero-actions .secondary{background:rgba(255,255,255,.16);color:#fff}.section{margin-bottom:28px}.section h2{font-family:var(--font-display);font-size:1.15rem;margin-bottom:12px}.media-row{display:flex;gap:13px;overflow:auto;padding:2px 2px 10px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}.card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:18px;overflow:hidden;box-shadow:0 6px 20px rgba(80,70,150,.10);cursor:pointer;transition:.18s ease}.card:hover{transform:translateY(-4px);background:var(--glass-bg-strong)}.media-row .card{min-width:170px;max-width:190px}.poster{width:100%;aspect-ratio:2/3;object-fit:cover;display:block;background:#eee}.card-body{padding:11px}.card-title{font-family:var(--font-display);font-weight:700;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.card-meta{font-size:.7rem;color:var(--text-dim);margin-top:5px}.loading,.empty{padding:50px 20px;text-align:center;color:var(--text-dim);background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:20px}.muted{color:var(--text-dim);line-height:1.6}.side-link{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:14px;font-size:.88rem;font-weight:700;color:#6C6A93;cursor:pointer;text-decoration:none;border:0;background:transparent;width:100%;text-align:left}.side-link.active{background:var(--sun-soft);color:#B8792A}.movies-menu{display:none}.movies-side-title{font-family:var(--font-display);font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9694B8;margin:0 8px 6px}.back-home{margin-top:auto}.watch-note{font-size:.72rem;color:var(--text-dim);margin-top:8px}
+@media(max-width:860px){.movies-app .sidebar{position:fixed;left:0;top:0;transform:translateX(-105%);transition:transform .2s ease;box-shadow:0 20px 60px rgba(40,35,70,.2)}.movies-app .sidebar.open{display:flex;transform:translateX(0)}.movies-menu{display:inline-flex}.movies-top{padding:12px 16px}.movies-wrap{padding:18px 16px}.hero{min-height:390px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.media-row .card{min-width:145px}}
+</style>
+</head>
+<body>
+<div class="movies-app" id="moviesApp">
+<aside class="sidebar" id="sidebar">
+<a class="brand" href="home.html"><div class="brand-mark">GW</div>GrandWave</a>
+<div>
+<div class="movies-side-title">Movies & TV</div>
+<button class="side-link active" data-view="home">Discover</button>
+<button class="side-link" data-view="movies">Movies</button>
+<button class="side-link" data-view="tv">TV Shows</button>
+<button class="side-link" data-view="trending">Trending</button>
+<button class="side-link" data-view="upcoming">Upcoming</button>
+<button class="side-link" data-view="top">Top Rated</button>
+<button class="side-link" data-view="watchlist">Watchlist</button>
+<button class="side-link" data-view="surprise">Surprise Me</button>
+</div>
+<a class="nav-item back-home" href="entertainment.html">Entertainment</a>
+<button class="sign-out-btn" onclick="location.href='home.html'">GrandWave Home</button>
+</aside>
+<main class="movies-main">
+<div class="movies-top"><button class="movies-btn secondary movies-menu" id="menuBtn">Menu</button><input id="searchInput" type="text" placeholder="Search movies and TV shows..."><button class="movies-btn" id="searchBtn">Search</button><button class="movies-btn secondary" id="randomBtn">Surprise</button></div>
+<div class="movies-wrap"><div class="movies-title"><h1>Movies & TV</h1><p>Discover movies and shows, then open legal streaming services where available.</p></div><div id="appView"></div><div class="watch-note">GrandWave provides discovery and redirects to legal services. It does not host movie or TV video.</div></div>
+</main></div>
+<script src="js/entertainment.js"></script>
+</body></html>
