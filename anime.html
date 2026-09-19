@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#05070d">
+  <meta name="description" content="GrandWave Entertainment — discover anime, artwork and wallpapers.">
+  <title>GrandWave | Anime Entertainment</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="gw-header">
+  <a class="gw-brand" href="#home" aria-label="GrandWave Anime">
+    <span class="gw-brand-mark">GW</span>
+    <span><strong>GrandWave</strong><small>Anime Entertainment</small></span>
+  </a>
+
+  <nav id="nav" class="gw-nav" aria-label="Anime navigation">
+    <a href="#home">Home</a>
+    <a href="#discover">Discover</a>
+    <a href="#categories">Categories</a>
+    <button id="favoritesNav" class="nav-button" type="button">Favorites <span id="favoriteCount">0</span></button>
+  </nav>
+
+  <button id="menuBtn" class="menu" type="button" aria-label="Open menu" aria-expanded="false">Menu</button>
+</header>
+
+<main>
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <span class="badge">GRANDWAVE ENTERTAINMENT</span>
+      <h1>Find your next <span class="gradient-text">anime world.</span></h1>
+      <p class="hero-description">Search anime, explore artwork, save favorites and discover wallpapers from across the anime world.</p>
+
+      <form id="searchForm" class="search-box">
+        <div class="search-input">
+          <span class="search-icon" aria-hidden="true">Search</span>
+          <input id="searchInput" type="search" autocomplete="off" placeholder="Search Naruto, One Piece, JJK..." aria-label="Search anime">
+          <button id="clearSearch" class="clear-search" type="button" aria-label="Clear search">Clear</button>
+        </div>
+        <button id="searchBtn" type="submit">Search</button>
+      </form>
+
+      <div class="popular" id="popularSearches">
+        <span class="popular-label">Popular</span>
+        <button type="button" data-search="Naruto">Naruto</button>
+        <button type="button" data-search="One Piece">One Piece</button>
+        <button type="button" data-search="Jujutsu Kaisen">JJK</button>
+        <button type="button" data-search="Demon Slayer">Demon Slayer</button>
+        <button type="button" data-search="Solo Leveling">Solo Leveling</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="discover" class="content">
+    <div class="section-header">
+      <div>
+        <span class="section-label">DISCOVER</span>
+        <h2 id="resultsTitle">Naruto</h2>
+      </div>
+      <span id="resultCount" class="result-count"></span>
+    </div>
+
+    <div class="toolbar" aria-label="Anime controls">
+      <button id="randomBtn" type="button" class="tool-button">Random Anime</button>
+      <button id="favoritesBtn" type="button" class="tool-button">Favorites</button>
+      <button id="historyBtn" type="button" class="tool-button">Search History</button>
+      <select id="sortSelect" class="tool-select" aria-label="Sort results">
+        <option value="relevance">Relevance</option>
+        <option value="score">Highest Rated</option>
+        <option value="title">A–Z</option>
+        <option value="year">Newest</option>
+      </select>
+      <select id="typeSelect" class="tool-select" aria-label="Filter by type">
+        <option value="all">All Types</option>
+        <option value="TV">TV</option>
+        <option value="Movie">Movie</option>
+        <option value="OVA">OVA</option>
+        <option value="ONA">ONA</option>
+        <option value="Special">Special</option>
+      </select>
+      <button id="gridToggle" type="button" class="tool-button">Compact View</button>
+    </div>
+
+    <div id="historyPanel" class="history-panel" hidden>
+      <div class="history-head"><strong>Recent searches</strong><button id="clearHistory" type="button">Clear</button></div>
+      <div id="historyList" class="history-list"></div>
+    </div>
+
+    <div id="status" class="status" role="status">
+      <div class="spinner"></div>
+      <p>Finding anime...</p>
+    </div>
+
+    <div id="wallpaperGrid" class="wallpaper-grid"></div>
+    <button id="loadMoreBtn" class="load-more" type="button" hidden>Load More</button>
+  </section>
+
+  <section id="categories" class="content categories-section">
+    <span class="section-label">EXPLORE</span>
+    <h2>Anime Categories</h2>
+    <div class="categories">
+      <button class="category" type="button" data-search="Naruto"><span class="category-icon">01</span><span class="category-name">Naruto</span><small>Shinobi world</small></button>
+      <button class="category" type="button" data-search="One Piece"><span class="category-icon">02</span><span class="category-name">One Piece</span><small>Pirate adventure</small></button>
+      <button class="category" type="button" data-search="Jujutsu Kaisen"><span class="category-icon">03</span><span class="category-name">Jujutsu Kaisen</span><small>Cursed energy</small></button>
+      <button class="category" type="button" data-search="Demon Slayer"><span class="category-icon">04</span><span class="category-name">Demon Slayer</span><small>Demon hunters</small></button>
+      <button class="category" type="button" data-search="Bleach"><span class="category-icon">05</span><span class="category-name">Bleach</span><small>Soul reapers</small></button>
+      <button class="category" type="button" data-search="Dragon Ball"><span class="category-icon">06</span><span class="category-name">Dragon Ball</span><small>Super warriors</small></button>
+      <button class="category" type="button" data-search="Solo Leveling"><span class="category-icon">07</span><span class="category-name">Solo Leveling</span><small>Hunters and gates</small></button>
+      <button class="category" type="button" data-search="Attack on Titan"><span class="category-icon">08</span><span class="category-name">Attack on Titan</span><small>Humanity and titans</small></button>
+      <button class="category" type="button" data-search="My Hero Academia"><span class="category-icon">09</span><span class="category-name">My Hero Academia</span><small>Heroes and quirks</small></button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-brand">GrandWave Anime</div>
+  <p>Anime discovery and wallpaper browsing inside GrandWave Entertainment. Images are hosted by their respective sources.</p>
+  <small>GrandWave Entertainment · 2026</small>
+</footer>
+
+<div id="modal" class="modal" aria-hidden="true">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button id="closeModal" class="close" type="button" aria-label="Close">Close</button>
+    <img id="modalImage" class="modal-image" src="" alt="Anime artwork">
+    <div class="modal-info">
+      <span id="modalTag" class="modal-tag">ANIME</span>
+      <h2 id="modalTitle"></h2>
+      <p id="modalDescription"></p>
+      <div id="modalStats" class="modal-stats"></div>
+      <div class="modal-buttons">
+        <a id="downloadBtn" class="download-btn" href="#" target="_blank" rel="noopener noreferrer">Download Wallpaper</a>
+        <a id="sourceBtn" class="source-btn" href="#" target="_blank" rel="noopener noreferrer">View Source</a>
+        <button id="favoriteBtn" class="source-btn" type="button">Save Favorite</button>
+        <button id="shareBtn" class="source-btn" type="button">Share</button>
+        <button id="fullscreenBtn" class="source-btn" type="button">Fullscreen</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  const API = "https://api.jikan.moe/v4";
+  const $ = id => document.getElementById(id);
+  const grid = $("wallpaperGrid");
+  const status = $("status");
+  const input = $("searchInput");
+  const title = $("resultsTitle");
+  const count = $("resultCount");
+  const modal = $("modal");
+  const modalImage = $("modalImage");
+  const modalTitle = $("modalTitle");
+  const modalDescription = $("modalDescription");
+  const modalStats = $("modalStats");
+  const favoriteCount = $("favoriteCount");
+  const loadMore = $("loadMoreBtn");
+  const sortSelect = $("sortSelect");
+  const typeSelect = $("typeSelect");
+  const historyPanel = $("historyPanel");
+  const historyList = $("historyList");
+  let currentQuery = "Naruto";
+  let currentPage = 1;
+  let allResults = [];
+  let activeAnime = null;
+  let showingFavorites = false;
+  let compact = false;
+  let loading = false;
+
+  const read = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } };
+  const write = (key, value) => localStorage.setItem(key, JSON.stringify(value));
+  const favorites = () => read("grandwave_anime_favorites", []);
+  const history = () => read("grandwave_anime_history", []);
+  const toast = msg => { const t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(window.__toast); window.__toast=setTimeout(()=>t.classList.remove("show"),2200); };
+
+  function updateFavoriteCount(){ favoriteCount.textContent = favorites().length; }
+  function isFavorite(id){ return favorites().some(x=>x.id===id); }
+  function toggleFavorite(anime){
+    let list=favorites();
+    if(isFavorite(anime.id)){ list=list.filter(x=>x.id!==anime.id); toast("Removed from favorites"); }
+    else { list.unshift(anime); toast("Saved to favorites"); }
+    write("grandwave_anime_favorites", list.slice(0,100));
+    updateFavoriteCount();
+    if(activeAnime?.id===anime.id) updateModalFavorite();
+    if(showingFavorites) renderFavorites();
+  }
+
+  function addHistory(q){
+    const h=history().filter(x=>x.toLowerCase()!==q.toLowerCase()); h.unshift(q); write("grandwave_anime_history",h.slice(0,8));
+  }
+  function renderHistory(){
+    const h=history(); historyList.innerHTML="";
+    if(!h.length){ historyList.innerHTML='<span class="empty-note">No recent searches.</span>'; return; }
+    h.forEach(q=>{ const b=document.createElement("button"); b.type="button"; b.textContent=q; b.addEventListener("click",()=>{ input.value=q; searchAnime(q); historyPanel.hidden=true; }); historyList.appendChild(b); });
+  }
+
+  function showLoading(message="Finding anime..."){
+    status.hidden=false; status.innerHTML='<div class="spinner"></div><p>'+message+'</p>'; grid.innerHTML=""; loadMore.hidden=true;
+  }
+  function showError(message){ status.hidden=false; status.innerHTML='<p>'+escapeHTML(message)+'</p><button class="retry" type="button">Try Again</button>'; status.querySelector(".retry").onclick=()=>searchAnime(currentQuery,currentPage); }
+  function escapeHTML(v){ return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c])); }
+
+  async function searchAnime(query,page=1,append=false){
+    query=query.trim(); if(!query || loading) return;
+    currentQuery=query; currentPage=page; showingFavorites=false;
+    if(!append) addHistory(query);
+    title.textContent=query; loading=true;
+    if(!append) showLoading(); else loadMore.disabled=true;
+    try{
+      const controller=new AbortController(); const timer=setTimeout(()=>controller.abort(),12000);
+      const response=await fetch(`${API}/anime?q=${encodeURIComponent(query)}&limit=12&page=${page}&sfw=true`,{signal:controller.signal});
+      clearTimeout(timer);
+      if(!response.ok) throw new Error(`API ${response.status}`);
+      const json=await response.json();
+      const results=(json.data||[]).map(mapAnime).filter(x=>x.image);
+      if(!results.length && !append) throw new Error("No anime found. Try another title.");
+      if(append) allResults.push(...results); else allResults=results;
+      renderResults();
+      loadMore.hidden=!json.pagination?.has_next_page;
+      loadMore.disabled=false;
+    }catch(e){ console.error(e); if(!append) showError(e.name==="AbortError"?"The request timed out. Try again.":"Couldn't load anime. Check your connection and try again."); }
+    finally{ loading=false; }
+  }
+
+  function mapAnime(a){
+    return {id:a.mal_id,title:a.title_english||a.title||"Unknown Anime",image:a.images?.jpg?.large_image_url||a.images?.jpg?.image_url,description:a.synopsis||"No synopsis available.",source:a.url,type:a.type||"Anime",score:a.score||0,year:a.year||a.aired?.prop?.from?.slice(0,4)||"Unknown",episodes:a.episodes||"—",status:a.status||"Unknown"};
+  }
+
+  function filtered(){
+    let list=[...allResults]; const type=typeSelect.value; if(type!=="all") list=list.filter(x=>x.type===type);
+    const sort=sortSelect.value;
+    if(sort==="score") list.sort((a,b)=>(b.score||0)-(a.score||0));
+    if(sort==="title") list.sort((a,b)=>a.title.localeCompare(b.title));
+    if(sort==="year") list.sort((a,b)=>String(b.year).localeCompare(String(a.year)));
+    return list;
+  }
+
+  function renderResults(){
+    status.hidden=true; grid.innerHTML=""; grid.classList.toggle("compact",compact);
+    const list=filtered(); count.textContent=`${list.length} result${list.length===1?"":"s"}`;
+    if(!list.length){ status.hidden=false; status.innerHTML='<p>No results match this filter.</p>'; return; }
+    list.forEach(anime=>grid.appendChild(card(anime)));
+  }
+
+  function card(anime){
+    const el=document.createElement("article"); el.className="card";
+    const img=document.createElement("img"); img.src=anime.image; img.alt=anime.title; img.loading="lazy";
+    img.onerror=()=>el.remove();
+    const favorite=document.createElement("button"); favorite.type="button"; favorite.className="card-favorite"; favorite.setAttribute("aria-label",isFavorite(anime.id)?"Remove favorite":"Save favorite"); favorite.textContent=isFavorite(anime.id)?"Saved":"Save";
+    favorite.onclick=e=>{e.stopPropagation();toggleFavorite(anime); favorite.textContent=isFavorite(anime.id)?"Saved":"Save";};
+    const overlay=document.createElement("div"); overlay.className="card-overlay";
+    const name=document.createElement("div"); name.className="card-title"; name.textContent=anime.title;
+    const meta=document.createElement("div"); meta.className="card-meta"; meta.textContent=`${anime.type} · ${anime.score?"Rating "+anime.score:"Unrated"}${anime.year?" · "+anime.year:""}`;
+    overlay.append(name,meta); el.append(img,favorite,overlay); el.addEventListener("click",()=>openModal(anime)); return el;
+  }
+
+  function renderFavorites(){
+    showingFavorites=true; const list=favorites(); title.textContent="Favorites"; count.textContent=`${list.length} saved`; grid.innerHTML=""; status.hidden=true; loadMore.hidden=true;
+    if(!list.length){status.hidden=false;status.innerHTML='<p>You have no saved anime yet. Search and save your favorites.</p>';return;}
+    list.forEach(a=>grid.appendChild(card(a)));
+  }
+
+  function openModal(anime){
+    activeAnime=anime; modalImage.src=anime.image; modalImage.alt=anime.title; modalTitle.textContent=anime.title; modalDescription.textContent=anime.description; modalStats.textContent=`${anime.type} · Rating ${anime.score||"—"} · ${anime.year||"Year unknown"} · ${anime.episodes||"—"} episodes · ${anime.status}`;
+    $("sourceBtn").href=anime.source||"#"; $("downloadBtn").href=anime.image||"#"; $("downloadBtn").setAttribute("download",`${anime.title.replace(/[^a-z0-9]+/gi,"-")}-wallpaper`); updateModalFavorite(); modal.classList.add("show"); modal.setAttribute("aria-hidden","false"); document.body.classList.add("modal-open");
+  }
+  function updateModalFavorite(){ $("favoriteBtn").textContent=isFavorite(activeAnime?.id)?"Remove Favorite":"Save Favorite"; }
+  function closeModal(){ modal.classList.remove("show"); modal.setAttribute("aria-hidden","true"); document.body.classList.remove("modal-open"); activeAnime=null; }
+
+  $("searchForm").addEventListener("submit",e=>{e.preventDefault();searchAnime(input.value);document.querySelector("#discover").scrollIntoView({behavior:"smooth"});});
+  $("clearSearch").onclick=()=>{input.value="";input.focus();};
+  document.querySelectorAll("[data-search]").forEach(b=>b.addEventListener("click",()=>{input.value=b.dataset.search;searchAnime(b.dataset.search);document.querySelector("#discover").scrollIntoView({behavior:"smooth"});$("nav").classList.remove("open");}));
+  sortSelect.onchange=()=>renderResults(); typeSelect.onchange=()=>renderResults();
+  $("favoritesBtn").onclick=renderFavorites; $("favoritesNav").onclick=renderFavorites;
+  $("randomBtn").onclick=async()=>{ const picks=["Naruto","One Piece","Jujutsu Kaisen","Demon Slayer","Bleach","Dragon Ball","Solo Leveling","Attack on Titan","My Hero Academia","Hunter x Hunter","Chainsaw Man","Black Clover"]; const q=picks[Math.floor(Math.random()*picks.length)]; input.value=q; await searchAnime(q); document.querySelector("#discover").scrollIntoView({behavior:"smooth"}); };
+  $("historyBtn").onclick=()=>{historyPanel.hidden=!historyPanel.hidden;renderHistory();};
+  $("clearHistory").onclick=()=>{write("grandwave_anime_history",[]);renderHistory();};
+  $("gridToggle").onclick=()=>{compact=!compact;$("gridToggle").textContent=compact?"Comfortable View":"Compact View";grid.classList.toggle("compact",compact);};
+  loadMore.onclick=()=>searchAnime(currentQuery,currentPage+1,true);
+  $("favoriteBtn").onclick=()=>{if(activeAnime)toggleFavorite(activeAnime);};
+  $("shareBtn").onclick=async()=>{if(!activeAnime)return; const data={title:activeAnime.title,text:`${activeAnime.title} — GrandWave Anime`,url:activeAnime.source}; try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(activeAnime.source||location.href);toast("Source link copied");}}catch{} };
+  $("fullscreenBtn").onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else modalImage.requestFullscreen?.();};
+  $("closeModal").onclick=closeModal; modal.onclick=e=>{if(e.target===modal)closeModal();};
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();if(e.key==="/"&&document.activeElement!==input){e.preventDefault();input.focus();}});
+  $("menuBtn").onclick=()=>{const nav=$("nav");nav.classList.toggle("open");$("menuBtn").setAttribute("aria-expanded",nav.classList.contains("open"));};
+
+  updateFavoriteCount(); searchAnime("Naruto");
+})();
+</script>
+</body>
+</html>
