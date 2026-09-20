@@ -1,293 +1,515 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#05070d">
-  <meta name="description" content="GrandWave Entertainment — discover anime, artwork and wallpapers.">
-  <title>GrandWave | Anime Entertainment</title>
-  <link rel="stylesheet" href="css/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AnimeAura</title>
+<meta name="description" content="Discover anime wallpapers.">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-<header class="gw-header">
-  <a class="gw-brand" href="#home" aria-label="GrandWave Anime">
-    <span class="gw-brand-mark">GW</span>
-    <span><strong>GrandWave</strong><small>Anime Entertainment</small></span>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.6 4.6"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="2.2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2.2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2.2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2.2"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.5 4.6 13.4a4.8 4.8 0 0 1 6.8-6.8l.6.6.6-.6a4.8 4.8 0 1 1 6.8 6.8z"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.4l2.7 5.5 6 .9-4.3 4.2 1 6-5.4-2.9-5.4 2.9 1-6L3.3 9.8l6-.9z"/></symbol>
+<symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4.5h5.5V10"/><path d="M19.5 4.5 11 13"/><path d="M18 14v4.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/></symbol>
+<symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3s5 4.3 5 9a5 5 0 0 1-10 0c0-1.9.8-3.5 1.8-4.7.4 1.3 1.2 2.2 2.2 2.5C11 7.6 12 5.4 12 3z"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></symbol>
+<symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-sword" viewBox="0 0 24 24"><path d="M18.5 3.5 20.5 5.5 10.5 15.5l-2-2z"/><path d="M7 14 4.5 16.5l3 3L10 17"/><path d="M3 21l3-3"/></symbol>
+<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13.5 3 5.5 13.5H11L10.5 21l8-10.5H13z"/></symbol>
+<symbol id="i-img" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="m4.5 17 4.2-4.2 3.3 3.3 2.6-2.6 4.4 4.4"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5 10 17.5 19.5 7"/></symbol>
+<symbol id="i-trend" viewBox="0 0 24 24"><path d="M3.5 16.5 9 11l3.5 3.5L20 7"/><path d="M15 7h5v5"/></symbol>
+<symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M4 7h3.5l9 10H20"/><path d="M4 17h3.5l2.2-2.6"/><path d="M13.5 9.6 16.5 7H20"/><path d="M17.5 4.5 20.5 7l-3 2.5"/><path d="M17.5 14.5 20.5 17l-3 2.5"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15"/><path d="M9.5 7V4.8h5V7"/><path d="M6.5 7l.9 12a1.5 1.5 0 0 0 1.5 1.4h6.2a1.5 1.5 0 0 0 1.5-1.4l.9-12"/></symbol>
+<symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5"/><path d="M6 11l6-6 6 6"/></symbol>
+</svg>
+
+<div class="app-shell">
+<aside class="sidebar">
+  <a class="brand" href="#" data-view="home">
+    <span class="brand-mark"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.2 5.4L20 10.6l-4.4 3.9L16.6 20 12 17.1 7.4 20l1-5.5L4 10.6l5.8-2.2z"/></svg></span>
+    <span>AnimeAura</span>
   </a>
-
-  <nav id="nav" class="gw-nav" aria-label="Anime navigation">
-    <a href="#home">Home</a>
-    <a href="#discover">Discover</a>
-    <a href="#categories">Categories</a>
-    <button id="favoritesNav" class="nav-button" type="button">Favorites <span id="favoriteCount">0</span></button>
-  </nav>
-
-  <button id="menuBtn" class="menu" type="button" aria-label="Open menu" aria-expanded="false">Menu</button>
-</header>
+  <div>
+    <p class="nav-label">Browse</p>
+    <nav>
+      <button class="nav-item active" data-view="home"><svg class="icon"><use href="#i-home"/></svg> Home</button>
+      <button class="nav-item" data-view="discover"><svg class="icon"><use href="#i-search"/></svg> Discover</button>
+      <button class="nav-item" data-view="categories"><svg class="icon"><use href="#i-grid"/></svg> Categories</button>
+      <button class="nav-item" data-view="favorites"><svg class="icon"><use href="#i-heart"/></svg> Favorites <span class="soon-badge" id="fcS" hidden>0</span></button>
+    </nav>
+  </div>
+  <div>
+    <p class="nav-label">Actions</p>
+    <nav>
+      <button class="nav-item" id="rndBtn"><svg class="icon"><use href="#i-shuffle"/></svg> Random</button>
+      <button class="nav-item" id="topBtn"><svg class="icon"><use href="#i-trend"/></svg> Top rated</button>
+    </nav>
+  </div>
+  <button class="sign-out-btn" id="topSide">Back to top</button>
+</aside>
 
 <main>
-  <section id="home" class="hero">
-    <div class="hero-content">
-      <span class="badge">GRANDWAVE ENTERTAINMENT</span>
-      <h1>Find your next <span class="gradient-text">anime world.</span></h1>
-      <p class="hero-description">Search anime, explore artwork, save favorites and discover wallpapers from across the anime world.</p>
+<div class="topnav">
+  <button class="tab active" data-view="home"><svg class="icon"><use href="#i-home"/></svg> Home</button>
+  <button class="tab" data-view="discover"><svg class="icon"><use href="#i-search"/></svg> Discover</button>
+  <button class="tab" data-view="categories"><svg class="icon"><use href="#i-grid"/></svg> Categories</button>
+  <button class="tab" data-view="favorites"><svg class="icon"><use href="#i-heart"/></svg> Favorites <span class="soon-badge" id="fcT" hidden>0</span></button>
+</div>
 
-      <form id="searchForm" class="search-box">
-        <div class="search-input">
-          <span class="search-icon" aria-hidden="true">Search</span>
-          <input id="searchInput" type="search" autocomplete="off" placeholder="Search Naruto, One Piece, JJK..." aria-label="Search anime">
-          <button id="clearSearch" class="clear-search" type="button" aria-label="Clear search">Clear</button>
-        </div>
-        <button id="searchBtn" type="submit">Search</button>
-      </form>
+<div class="content">
 
-      <div class="popular" id="popularSearches">
-        <span class="popular-label">Popular</span>
-        <button type="button" data-search="Naruto">Naruto</button>
-        <button type="button" data-search="One Piece">One Piece</button>
-        <button type="button" data-search="Jujutsu Kaisen">JJK</button>
-        <button type="button" data-search="Demon Slayer">Demon Slayer</button>
-        <button type="button" data-search="Solo Leveling">Solo Leveling</button>
+  <section class="view" id="v-home">
+    <div class="page-head"><h1>AnimeAura</h1><p>Find the perfect anime wallpaper for your screen.</p></div>
+    <div class="form-card" style="max-width:640px;margin-bottom:24px">
+      <label>Search anime</label>
+      <input type="text" class="js-inp" placeholder="Naruto, JJK, One Piece…">
+      <button class="btn js-go" style="width:100%"><svg class="icon"><use href="#i-search"/></svg> Search</button>
+      <div class="vote-row" style="flex-wrap:wrap;margin-top:12px">
+        <span style="font-size:.72rem;color:var(--text-dim);align-self:center">Popular:</span>
+        <button class="vote-btn" data-query="Naruto">Naruto</button>
+        <button class="vote-btn" data-query="One Piece">One Piece</button>
+        <button class="vote-btn" data-query="Jujutsu Kaisen">JJK</button>
+        <button class="vote-btn" data-query="Demon Slayer">Demon Slayer</button>
+        <button class="vote-btn" data-query="Chainsaw Man">Chainsaw Man</button>
       </div>
+    </div>
+    <div class="cat-block">
+      <div class="cat-head"><svg class="icon" style="color:var(--lav)"><use href="#i-trend"/></svg><h2>Trending now</h2><span class="cat-count" id="tCount"></span></div>
+      <div class="link-grid" id="tGrid"></div>
     </div>
   </section>
 
-  <section id="discover" class="content">
-    <div class="section-header">
-      <div>
-        <span class="section-label">DISCOVER</span>
-        <h2 id="resultsTitle">Naruto</h2>
-      </div>
-      <span id="resultCount" class="result-count"></span>
+  <section class="view" id="v-discover" hidden>
+    <div class="page-head"><h1>Discover</h1><p>Search and browse anime artwork.</p></div>
+    <div class="form-card" style="max-width:640px;margin-bottom:20px">
+      <label>Search anime</label>
+      <input type="text" class="js-inp" placeholder="Type a title…">
+      <button class="btn js-go" style="width:100%"><svg class="icon"><use href="#i-search"/></svg> Search</button>
+      <div class="vote-row" id="recent" style="flex-wrap:wrap;margin-top:12px"></div>
     </div>
-
-    <div class="toolbar" aria-label="Anime controls">
-      <button id="randomBtn" type="button" class="tool-button">Random Anime</button>
-      <button id="favoritesBtn" type="button" class="tool-button">Favorites</button>
-      <button id="historyBtn" type="button" class="tool-button">Search History</button>
-      <select id="sortSelect" class="tool-select" aria-label="Sort results">
-        <option value="relevance">Relevance</option>
-        <option value="score">Highest Rated</option>
-        <option value="title">A–Z</option>
+    <div class="cat-head" style="flex-wrap:wrap;gap:10px">
+      <div class="vote-row" id="typeSeg">
+        <button class="vote-btn like active" data-type="">All</button>
+        <button class="vote-btn" data-type="tv">TV</button>
+        <button class="vote-btn" data-type="movie">Movie</button>
+        <button class="vote-btn" data-type="ova">OVA</button>
+        <button class="vote-btn" data-type="ona">ONA</button>
+      </div>
+      <select id="sortSel" style="width:auto;margin:0;padding:8px 12px;font-size:.8rem">
+        <option value="default">Relevance</option>
+        <option value="score">Top rated</option>
         <option value="year">Newest</option>
+        <option value="title">Title A–Z</option>
       </select>
-      <select id="typeSelect" class="tool-select" aria-label="Filter by type">
-        <option value="all">All Types</option>
-        <option value="TV">TV</option>
-        <option value="Movie">Movie</option>
-        <option value="OVA">OVA</option>
-        <option value="ONA">ONA</option>
-        <option value="Special">Special</option>
-      </select>
-      <button id="gridToggle" type="button" class="tool-button">Compact View</button>
+      <span class="cat-count" id="dCount"></span>
     </div>
-
-    <div id="historyPanel" class="history-panel" hidden>
-      <div class="history-head"><strong>Recent searches</strong><button id="clearHistory" type="button">Clear</button></div>
-      <div id="historyList" class="history-list"></div>
-    </div>
-
-    <div id="status" class="status" role="status">
-      <div class="spinner"></div>
-      <p>Finding anime...</p>
-    </div>
-
-    <div id="wallpaperGrid" class="wallpaper-grid"></div>
-    <button id="loadMoreBtn" class="load-more" type="button" hidden>Load More</button>
+    <div class="empty-slot" id="status" hidden></div>
+    <div class="link-grid" id="grid" style="margin-top:14px"></div>
+    <div style="text-align:center;margin-top:22px"><button class="btn" id="moreBtn" hidden>Load more</button></div>
   </section>
 
-  <section id="categories" class="content categories-section">
-    <span class="section-label">EXPLORE</span>
-    <h2>Anime Categories</h2>
-    <div class="categories">
-      <button class="category" type="button" data-search="Naruto"><span class="category-icon">01</span><span class="category-name">Naruto</span><small>Shinobi world</small></button>
-      <button class="category" type="button" data-search="One Piece"><span class="category-icon">02</span><span class="category-name">One Piece</span><small>Pirate adventure</small></button>
-      <button class="category" type="button" data-search="Jujutsu Kaisen"><span class="category-icon">03</span><span class="category-name">Jujutsu Kaisen</span><small>Cursed energy</small></button>
-      <button class="category" type="button" data-search="Demon Slayer"><span class="category-icon">04</span><span class="category-name">Demon Slayer</span><small>Demon hunters</small></button>
-      <button class="category" type="button" data-search="Bleach"><span class="category-icon">05</span><span class="category-name">Bleach</span><small>Soul reapers</small></button>
-      <button class="category" type="button" data-search="Dragon Ball"><span class="category-icon">06</span><span class="category-name">Dragon Ball</span><small>Super warriors</small></button>
-      <button class="category" type="button" data-search="Solo Leveling"><span class="category-icon">07</span><span class="category-name">Solo Leveling</span><small>Hunters and gates</small></button>
-      <button class="category" type="button" data-search="Attack on Titan"><span class="category-icon">08</span><span class="category-name">Attack on Titan</span><small>Humanity and titans</small></button>
-      <button class="category" type="button" data-search="My Hero Academia"><span class="category-icon">09</span><span class="category-name">My Hero Academia</span><small>Heroes and quirks</small></button>
+  <section class="view" id="v-categories" hidden>
+    <div class="page-head"><h1>Categories</h1><p>Jump straight into a universe.</p></div>
+    <div class="link-grid" id="catGrid"></div>
+  </section>
+
+  <section class="view" id="v-favorites" hidden>
+    <div class="page-head"><h1>Favorites</h1><p>Saved locally on this device.</p></div>
+    <div class="empty-slot" id="favEmpty" hidden>
+      <svg class="icon"><use href="#i-heart"/></svg>
+      <p>No favourites yet.<br>Tap the heart on any artwork.</p>
+      <button class="btn" data-view="discover">Browse artwork</button>
+    </div>
+    <div class="link-grid" id="favGrid"></div>
+    <div style="text-align:center;margin-top:22px" id="favAct" hidden>
+      <button class="btn" id="clearBtn" style="background:linear-gradient(135deg,#D9503F,#FF7A59)"><svg class="icon"><use href="#i-trash"/></svg> Clear all</button>
     </div>
   </section>
+
+</div>
 </main>
+</div>
 
-<footer>
-  <div class="footer-brand">GrandWave Anime</div>
-  <p>Anime discovery and wallpaper browsing inside GrandWave Entertainment. Images are hosted by their respective sources.</p>
-  <small>GrandWave Entertainment · 2026</small>
-</footer>
-
-<div id="modal" class="modal" aria-hidden="true">
-  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <button id="closeModal" class="close" type="button" aria-label="Close">Close</button>
-    <img id="modalImage" class="modal-image" src="" alt="Anime artwork">
-    <div class="modal-info">
-      <span id="modalTag" class="modal-tag">ANIME</span>
-      <h2 id="modalTitle"></h2>
-      <p id="modalDescription"></p>
-      <div id="modalStats" class="modal-stats"></div>
-      <div class="modal-buttons">
-        <a id="downloadBtn" class="download-btn" href="#" target="_blank" rel="noopener noreferrer">Download Wallpaper</a>
-        <a id="sourceBtn" class="source-btn" href="#" target="_blank" rel="noopener noreferrer">View Source</a>
-        <button id="favoriteBtn" class="source-btn" type="button">Save Favorite</button>
-        <button id="shareBtn" class="source-btn" type="button">Share</button>
-        <button id="fullscreenBtn" class="source-btn" type="button">Fullscreen</button>
-      </div>
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+<div class="modal-box">
+  <button class="close" id="closeBtn" aria-label="Close"><svg class="icon"><use href="#i-x"/></svg></button>
+  <img id="mImg" class="modal-image" src="" alt="">
+  <div class="modal-info">
+    <span class="modal-tag" id="mTag">ANIME ARTWORK</span>
+    <h2 id="mTitle"></h2>
+    <div id="mFacts" style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 12px"></div>
+    <p id="mDesc"></p>
+    <div class="modal-buttons">
+      <button class="btn" id="dlBtn"><svg class="icon"><use href="#i-img"/></svg> Download</button>
+      <a class="btn" id="srcBtn" target="_blank" rel="noopener" style="background:rgba(255,255,255,.6);color:var(--ink);box-shadow:none;border:1.5px solid var(--glass-border)"><svg class="icon"><use href="#i-ext"/></svg> Source</a>
+      <button class="btn" id="mFav" style="background:rgba(255,255,255,.6);color:var(--ink);box-shadow:none;border:1.5px solid var(--glass-border)"><svg class="icon"><use href="#i-heart"/></svg> <span>Save</span></button>
     </div>
   </div>
 </div>
+</div>
 
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div class="toast-stack" id="toasts"></div>
+<button class="to-top" id="toTop" hidden aria-label="Top"><svg class="icon"><use href="#i-up"/></svg></button>
 
 <script>
-(() => {
-  const API = "https://api.jikan.moe/v4";
-  const $ = id => document.getElementById(id);
-  const grid = $("wallpaperGrid");
-  const status = $("status");
-  const input = $("searchInput");
-  const title = $("resultsTitle");
-  const count = $("resultCount");
-  const modal = $("modal");
-  const modalImage = $("modalImage");
-  const modalTitle = $("modalTitle");
-  const modalDescription = $("modalDescription");
-  const modalStats = $("modalStats");
-  const favoriteCount = $("favoriteCount");
-  const loadMore = $("loadMoreBtn");
-  const sortSelect = $("sortSelect");
-  const typeSelect = $("typeSelect");
-  const historyPanel = $("historyPanel");
-  const historyList = $("historyList");
-  let currentQuery = "Naruto";
-  let currentPage = 1;
-  let allResults = [];
-  let activeAnime = null;
-  let showingFavorites = false;
-  let compact = false;
-  let loading = false;
+(()=>{
+const API='https://api.jikan.moe/v4',LIM=24,FK='aa:fav',RK='aa:rec',DR=['Naruto','One Piece','Jujutsu Kaisen','Demon Slayer'];
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)],C=new Map();
 
-  const read = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } };
-  const write = (key, value) => localStorage.setItem(key, JSON.stringify(value));
-  const favorites = () => read("grandwave_anime_favorites", []);
-  const history = () => read("grandwave_anime_history", []);
-  const toast = msg => { const t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(window.__toast); window.__toast=setTimeout(()=>t.classList.remove("show"),2200); };
+const load=(k,f)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?f:v}catch{return f}};
+const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};
+const E={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>E[c]);
+const slug=v=>String(v||'w').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60)||'w';
 
-  function updateFavoriteCount(){ favoriteCount.textContent = favorites().length; }
-  function isFavorite(id){ return favorites().some(x=>x.id===id); }
-  function toggleFavorite(anime){
-    let list=favorites();
-    if(isFavorite(anime.id)){ list=list.filter(x=>x.id!==anime.id); toast("Removed from favorites"); }
-    else { list.unshift(anime); toast("Saved to favorites"); }
-    write("grandwave_anime_favorites", list.slice(0,100));
-    updateFavoriteCount();
-    if(activeAnime?.id===anime.id) updateModalFavorite();
-    if(showingFavorites) renderFavorites();
-  }
+const S={view:'home',query:'',type:'',sort:'default',page:1,hasNext:false,items:[],trend:[],rid:0,cur:null,fav:load(FK,[]),rec:load(RK,DR)};
 
-  function addHistory(q){
-    const h=history().filter(x=>x.toLowerCase()!==q.toLowerCase()); h.unshift(q); write("grandwave_anime_history",h.slice(0,8));
-  }
-  function renderHistory(){
-    const h=history(); historyList.innerHTML="";
-    if(!h.length){ historyList.innerHTML='<span class="empty-note">No recent searches.</span>'; return; }
-    h.forEach(q=>{ const b=document.createElement("button"); b.type="button"; b.textContent=q; b.addEventListener("click",()=>{ input.value=q; searchAnime(q); historyPanel.hidden=true; }); historyList.appendChild(b); });
-  }
+const CATS=[
+ ['Naruto','Shinobi world, ninja rivalries and epic battles.','flame','coral'],
+ ['One Piece','Pirates, treasure maps and the Grand Line.','compass','sky'],
+ ['Jujutsu Kaisen','Cursed energy and sorcerer showdowns.','eye','lav'],
+ ['Demon Slayer','Breathing styles and demon hunters.','sword','mint'],
+ ['Bleach','Soul reapers, zanpakuto and Hueco Mundo.','bolt','sun'],
+ ['Dragon Ball','Super warriors and legendary transformations.','spark','coral'],
+ ['Attack on Titan','Titans, walls and the fight for freedom.','flame','lav'],
+ ['My Hero Academia','Quirks, heroes and U.A. High School.','bolt','sky'],
+ ['Chainsaw Man','Devil hunters with a very sharp edge.','sword','mint'],
+ ['Spy x Family','A fake family with very real chaos.','eye','sun'],
+ ['Fullmetal Alchemist','Alchemy, brothers and equivalent exchange.','spark','coral'],
+ ['Steins Gate','Time travel, timelines and tough choices.','compass','lav']
+];
 
-  function showLoading(message="Finding anime..."){
-    status.hidden=false; status.innerHTML='<div class="spinner"></div><p>'+message+'</p>'; grid.innerHTML=""; loadMore.hidden=true;
-  }
-  function showError(message){ status.hidden=false; status.innerHTML='<p>'+escapeHTML(message)+'</p><button class="retry" type="button">Try Again</button>'; status.querySelector(".retry").onclick=()=>searchAnime(currentQuery,currentPage); }
-  function escapeHTML(v){ return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c])); }
+const el={
+ v:$$('.view'),tG:$('#tGrid'),tC:$('#tCount'),g:$('#grid'),st:$('#status'),dC:$('#dCount'),more:$('#moreBtn'),
+ tSeg:$('#typeSeg'),sort:$('#sortSel'),rec:$('#recent'),fG:$('#favGrid'),fE:$('#favEmpty'),fA:$('#favAct'),
+ fcT:$('#fcT'),fcS:$('#fcS'),clr:$('#clearBtn'),m:$('#modal'),mI:$('#mImg'),mT:$('#mTitle'),mTag:$('#mTag'),
+ mF:$('#mFacts'),mD:$('#mDesc'),mFav:$('#mFav'),src:$('#srcBtn'),dl:$('#dlBtn'),close:$('#closeBtn'),
+ rnd:$('#rndBtn'),top:$('#topBtn'),topS:$('#topSide'),toasts:$('#toasts'),tTop:$('#toTop'),
+ inp:$$('.js-inp'),go:$$('.js-go')
+};
 
-  async function searchAnime(query,page=1,append=false){
-    query=query.trim(); if(!query || loading) return;
-    currentQuery=query; currentPage=page; showingFavorites=false;
-    if(!append) addHistory(query);
-    title.textContent=query; loading=true;
-    if(!append) showLoading(); else loadMore.disabled=true;
-    try{
-      const controller=new AbortController(); const timer=setTimeout(()=>controller.abort(),12000);
-      const response=await fetch(`${API}/anime?q=${encodeURIComponent(query)}&limit=12&page=${page}&sfw=true`,{signal:controller.signal});
-      clearTimeout(timer);
-      if(!response.ok) throw new Error(`API ${response.status}`);
-      const json=await response.json();
-      const results=(json.data||[]).map(mapAnime).filter(x=>x.image);
-      if(!results.length && !append) throw new Error("No anime found. Try another title.");
-      if(append) allResults.push(...results); else allResults=results;
-      renderResults();
-      loadMore.hidden=!json.pagination?.has_next_page;
-      loadMore.disabled=false;
-    }catch(e){ console.error(e); if(!append) showError(e.name==="AbortError"?"The request timed out. Try again.":"Couldn't load anime. Check your connection and try again."); }
-    finally{ loading=false; }
-  }
+let last=0;
+const gate=()=>{const n=Date.now(),w=Math.max(0,420-(n-last));last=n+w;return w?new Promise(r=>setTimeout(r,w)):Promise.resolve()};
+async function api(u){
+ if(C.has(u))return C.get(u);
+ await gate();
+ const r=await fetch(u); if(!r.ok)throw new Error('HTTP '+r.status);
+ const j=await r.json(); C.set(u,j); return j;
+}
 
-  function mapAnime(a){
-    return {id:a.mal_id,title:a.title_english||a.title||"Unknown Anime",image:a.images?.jpg?.large_image_url||a.images?.jpg?.image_url,description:a.synopsis||"No synopsis available.",source:a.url,type:a.type||"Anime",score:a.score||0,year:a.year||a.aired?.prop?.from?.slice(0,4)||"Unknown",episodes:a.episodes||"—",status:a.status||"Unknown"};
-  }
+const map=a=>{const i=a.images||{},j=i.jpg||{},w=i.webp||{};return{
+ id:a.mal_id,title:a.title_english||a.title||'Unknown',
+ image:j.large_image_url||w.large_image_url||j.image_url||w.image_url||'',
+ description:a.synopsis||'No synopsis available yet.',
+ source:a.url||'https://myanimelist.net',type:a.type||'Anime',
+ score:typeof a.score==='number'?a.score:null,episodes:a.episodes||null,
+ year:a.year||a.aired?.prop?.from?.year||null,status:a.status||'',
+ genres:(a.genres||[]).slice(0,3).map(g=>g.name)}};
+const clean=l=>l.map(map).filter(i=>i.image);
 
-  function filtered(){
-    let list=[...allResults]; const type=typeSelect.value; if(type!=="all") list=list.filter(x=>x.type===type);
-    const sort=sortSelect.value;
-    if(sort==="score") list.sort((a,b)=>(b.score||0)-(a.score||0));
-    if(sort==="title") list.sort((a,b)=>a.title.localeCompare(b.title));
-    if(sort==="year") list.sort((a,b)=>String(b.year).localeCompare(String(a.year)));
-    return list;
-  }
+function setView(v){
+ if(!v)return; S.view=v;
+ el.v.forEach(s=>s.hidden=s.id!=='v-'+v);
+ $$('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===v));
+ scrollTo({top:0,behavior:'smooth'});
+ if(v==='favorites')renderFavs();
+ if(v==='home'&&!S.trend.length)trending();
+ if(v==='discover'&&innerWidth>860)setTimeout(()=>el.inp[1]?.focus(),220);
+}
+const setInp=v=>el.inp.forEach(i=>{if(i.value!==v)i.value=v});
 
-  function renderResults(){
-    status.hidden=true; grid.innerHTML=""; grid.classList.toggle("compact",compact);
-    const list=filtered(); count.textContent=`${list.length} result${list.length===1?"":"s"}`;
-    if(!list.length){ status.hidden=false; status.innerHTML='<p>No results match this filter.</p>'; return; }
-    list.forEach(anime=>grid.appendChild(card(anime)));
-  }
+function pushRec(t){t=t.trim();if(!t)return;S.rec=[t,...S.rec.filter(r=>r.toLowerCase()!==t.toLowerCase())].slice(0,6);save(RK,S.rec);drawRec()}
+function drawRec(){
+ el.rec.innerHTML=S.rec.length?'<span style="font-size:.72rem;color:var(--text-dim);align-self:center">Recent:</span>'+S.rec.map(t=>`<button class="vote-btn" data-query="${esc(t)}">${esc(t)}</button>`).join(''):'';
+}
 
-  function card(anime){
-    const el=document.createElement("article"); el.className="card";
-    const img=document.createElement("img"); img.src=anime.image; img.alt=anime.title; img.loading="lazy";
-    img.onerror=()=>el.remove();
-    const favorite=document.createElement("button"); favorite.type="button"; favorite.className="card-favorite"; favorite.setAttribute("aria-label",isFavorite(anime.id)?"Remove favorite":"Save favorite"); favorite.textContent=isFavorite(anime.id)?"Saved":"Save";
-    favorite.onclick=e=>{e.stopPropagation();toggleFavorite(anime); favorite.textContent=isFavorite(anime.id)?"Saved":"Save";};
-    const overlay=document.createElement("div"); overlay.className="card-overlay";
-    const name=document.createElement("div"); name.className="card-title"; name.textContent=anime.title;
-    const meta=document.createElement("div"); meta.className="card-meta"; meta.textContent=`${anime.type} · ${anime.score?"Rating "+anime.score:"Unrated"}${anime.year?" · "+anime.year:""}`;
-    overlay.append(name,meta); el.append(img,favorite,overlay); el.addEventListener("click",()=>openModal(anime)); return el;
-  }
+function skel(){
+ const n=document.createElement('div');n.className='link-card';n.style.pointerEvents='none';
+ n.innerHTML='<div style="height:150px;border-radius:14px;background:rgba(255,255,255,.45)"></div><div style="height:12px;width:70%;border-radius:6px;background:rgba(255,255,255,.55);margin-top:4px"></div><div style="height:10px;width:40%;border-radius:6px;background:rgba(255,255,255,.45)"></div>';
+ return n;
+}
+function skels(c,n=8){c.hidden=false;c.innerHTML='';const f=document.createDocumentFragment();for(let i=0;i<n;i++)f.appendChild(skel());c.appendChild(f)}
+const stat=h=>{el.g.hidden=true;el.st.hidden=false;el.st.innerHTML=h};
+const statLoad=()=>stat('<div class="spinner"></div><p>Finding anime…</p>');
+const statEmpty=()=>stat('<svg class="icon"><use href="#i-img"/></svg><p>No results found.<br>Try another title.</p>');
+function statErr(m){
+ stat(`<svg class="icon"><use href="#i-info"/></svg><p>${esc(m)}</p><button class="btn" id="retry">Try again</button>`);
+ $('#retry')?.addEventListener('click',()=>run(S.query));
+}
 
-  function renderFavorites(){
-    showingFavorites=true; const list=favorites(); title.textContent="Favorites"; count.textContent=`${list.length} saved`; grid.innerHTML=""; status.hidden=true; loadMore.hidden=true;
-    if(!list.length){status.hidden=false;status.innerHTML='<p>You have no saved anime yet. Search and save your favorites.</p>';return;}
-    list.forEach(a=>grid.appendChild(card(a)));
-  }
+const isFav=id=>S.fav.some(i=>i.id===id);
+function card(it){
+ const c=document.createElement('article');
+ c.className='link-card';c.dataset.id=it.id;c.style.cursor='pointer';
+ const a=isFav(it.id);
+ const sc=it.score?`<span class="poster"><svg class="icon icon-xs"><use href="#i-star"/></svg> ${it.score.toFixed(2)}</span>`:'';
+ c.innerHTML=`<div style="position:relative;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.4)"><img src="${esc(it.image)}" alt="${esc(it.title)}" loading="lazy" decoding="async" style="display:block;width:100%;aspect-ratio:3/4;object-fit:cover"><button class="fav-btn${a?' active':''}" data-fav="${it.id}" aria-label="Save" style="position:absolute;top:8px;right:8px;width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.75);color:${a?'var(--coral)':'var(--text-dim)'}"><svg class="icon"><use href="#i-heart"/></svg></button></div><b style="margin-top:4px">${esc(it.title)}</b><span class="url">${esc(it.type)}</span>${sc}`;
+ c.querySelector('img').addEventListener('error',()=>c.remove(),{once:true});
+ return c;
+}
 
-  function openModal(anime){
-    activeAnime=anime; modalImage.src=anime.image; modalImage.alt=anime.title; modalTitle.textContent=anime.title; modalDescription.textContent=anime.description; modalStats.textContent=`${anime.type} · Rating ${anime.score||"—"} · ${anime.year||"Year unknown"} · ${anime.episodes||"—"} episodes · ${anime.status}`;
-    $("sourceBtn").href=anime.source||"#"; $("downloadBtn").href=anime.image||"#"; $("downloadBtn").setAttribute("download",`${anime.title.replace(/[^a-z0-9]+/gi,"-")}-wallpaper`); updateModalFavorite(); modal.classList.add("show"); modal.setAttribute("aria-hidden","false"); document.body.classList.add("modal-open");
-  }
-  function updateModalFavorite(){ $("favoriteBtn").textContent=isFavorite(activeAnime?.id)?"Remove Favorite":"Save Favorite"; }
-  function closeModal(){ modal.classList.remove("show"); modal.setAttribute("aria-hidden","true"); document.body.classList.remove("modal-open"); activeAnime=null; }
+function sorted(l){
+ const a=l.slice();
+ if(S.sort==='score')a.sort((x,y)=>(y.score||0)-(x.score||0));
+ else if(S.sort==='year')a.sort((x,y)=>(y.year||0)-(x.year||0));
+ else if(S.sort==='title')a.sort((x,y)=>x.title.localeCompare(y.title));
+ return a;
+}
 
-  $("searchForm").addEventListener("submit",e=>{e.preventDefault();searchAnime(input.value);document.querySelector("#discover").scrollIntoView({behavior:"smooth"});});
-  $("clearSearch").onclick=()=>{input.value="";input.focus();};
-  document.querySelectorAll("[data-search]").forEach(b=>b.addEventListener("click",()=>{input.value=b.dataset.search;searchAnime(b.dataset.search);document.querySelector("#discover").scrollIntoView({behavior:"smooth"});$("nav").classList.remove("open");}));
-  sortSelect.onchange=()=>renderResults(); typeSelect.onchange=()=>renderResults();
-  $("favoritesBtn").onclick=renderFavorites; $("favoritesNav").onclick=renderFavorites;
-  $("randomBtn").onclick=async()=>{ const picks=["Naruto","One Piece","Jujutsu Kaisen","Demon Slayer","Bleach","Dragon Ball","Solo Leveling","Attack on Titan","My Hero Academia","Hunter x Hunter","Chainsaw Man","Black Clover"]; const q=picks[Math.floor(Math.random()*picks.length)]; input.value=q; await searchAnime(q); document.querySelector("#discover").scrollIntoView({behavior:"smooth"}); };
-  $("historyBtn").onclick=()=>{historyPanel.hidden=!historyPanel.hidden;renderHistory();};
-  $("clearHistory").onclick=()=>{write("grandwave_anime_history",[]);renderHistory();};
-  $("gridToggle").onclick=()=>{compact=!compact;$("gridToggle").textContent=compact?"Comfortable View":"Compact View";grid.classList.toggle("compact",compact);};
-  loadMore.onclick=()=>searchAnime(currentQuery,currentPage+1,true);
-  $("favoriteBtn").onclick=()=>{if(activeAnime)toggleFavorite(activeAnime);};
-  $("shareBtn").onclick=async()=>{if(!activeAnime)return; const data={title:activeAnime.title,text:`${activeAnime.title} — GrandWave Anime`,url:activeAnime.source}; try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(activeAnime.source||location.href);toast("Source link copied");}}catch{} };
-  $("fullscreenBtn").onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else modalImage.requestFullscreen?.();};
-  $("closeModal").onclick=closeModal; modal.onclick=e=>{if(e.target===modal)closeModal();};
-  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();if(e.key==="/"&&document.activeElement!==input){e.preventDefault();input.focus();}});
-  $("menuBtn").onclick=()=>{const nav=$("nav");nav.classList.toggle("open");$("menuBtn").setAttribute("aria-expanded",nav.classList.contains("open"));};
+function drawGrid(){
+ const items=sorted(S.items);
+ el.g.innerHTML='';
+ if(!items.length){statEmpty();el.more.hidden=true;el.dC.textContent='';return}
+ el.st.hidden=true;el.g.hidden=false;
+ const f=document.createDocumentFragment();
+ items.forEach(i=>f.appendChild(card(i)));
+ el.g.appendChild(f);
+ el.dC.textContent=`${items.length} title${items.length===1?'':'s'}`+(S.hasNext?' · more available':'');
+ el.more.hidden=!S.hasNext;el.more.disabled=false;el.more.textContent='Load more';
+}
 
-  updateFavoriteCount(); searchAnime("Naruto");
+async function run(q,{append=false,push=true}={}){
+ S.query=q;setInp(q);if(push)pushRec(q);
+ if(!append){S.page=1;S.items=[]}
+ const rid=++S.rid;
+ if(!append){el.st.hidden=true;el.dC.textContent='';skels(el.g,8);el.more.hidden=true}
+ else{el.more.disabled=true;el.more.textContent='Loading…'}
+
+ const p=new URLSearchParams({limit:LIM,page:S.page,sfw:'true'});
+ if(S.type)p.set('type',S.type);
+ if(q)p.set('q',q);
+ try{
+  const j=await api(`${API}/${q?'anime':'top/anime'}?${p}`);
+  if(rid!==S.rid)return;
+  const items=clean(j.data||[]);
+  S.items=append?S.items.concat(items):items;
+  S.hasNext=!!j.pagination?.has_next_page;
+  if(!S.items.length){statEmpty();el.more.hidden=true;return}
+  drawGrid();
+ }catch(e){
+  if(rid!==S.rid)return;
+  console.error(e);
+  statErr('Could not load anime. Check your connection and try again.');
+ }
+}
+const submit=v=>{const q=String(v||'').trim();S.type='';syncType();run(q)};
+const go=v=>{setView('discover');submit(v)};
+
+async function trending(){
+ skels(el.tG,8);
+ try{
+  const j=await api(`${API}/top/anime?limit=12&sfw=true&filter=bypopularity`);
+  const items=clean(j.data||[]);S.trend=items;el.tG.innerHTML='';
+  if(!items.length){el.tG.innerHTML='<div class="empty-slot">Nothing to show.</div>';return}
+  const f=document.createDocumentFragment();
+  items.forEach(i=>f.appendChild(card(i)));
+  el.tG.appendChild(f);
+  el.tC.textContent=`${items.length} titles`;
+ }catch(e){
+  console.error(e);
+  el.tG.innerHTML='<div class="empty-slot">Could not load trending.</div>';
+ }
+}
+
+const find=id=>S.items.find(i=>i.id===id)||S.fav.find(i=>i.id===id)||S.trend.find(i=>i.id===id)||null;
+
+function toggleFav(it){
+ const i=S.fav.findIndex(f=>f.id===it.id);
+ if(i>-1){S.fav.splice(i,1);toast('Removed from favourites')}
+ else{S.fav.unshift(it);toast('Saved to favourites')}
+ save(FK,S.fav);
+ syncFav(it.id);
+ if(S.view==='favorites')renderFavs();
+}
+
+function syncFav(id){
+ const a=isFav(id);
+ $$(`.fav-btn[data-fav="${id}"]`).forEach(b=>{b.classList.toggle('active',a);b.style.color=a?'var(--coral)':'var(--text-dim)'});
+ if(S.cur?.id===id)updMFav();
+ updCounts();
+}
+
+function updCounts(){
+ const c=S.fav.length;
+ [el.fcT,el.fcS].forEach(b=>{if(b){b.textContent=String(c);b.hidden=c===0}});
+}
+
+function renderFavs(){
+ el.fG.innerHTML='';
+ if(!S.fav.length){el.fG.hidden=true;el.fE.hidden=false;el.fA.hidden=true;return}
+ el.fE.hidden=true;el.fG.hidden=false;el.fA.hidden=false;
+ const f=document.createDocumentFragment();
+ S.fav.forEach(i=>f.appendChild(card(i)));
+ el.fG.appendChild(f);
+}
+
+
+function openModal(it){
+ S.cur=it;
+ el.mI.src=it.image;el.mI.alt=it.title;
+ el.mTag.textContent=(it.type||'Anime').toUpperCase();
+ el.mT.textContent=it.title;
+ el.mD.textContent=it.description;
+ el.src.href=it.source;
+ const facts=[];
+ if(it.score)facts.push(`<span class="poster"><svg class="icon icon-xs"><use href="#i-star"/></svg> ${it.score.toFixed(2)}</span>`);
+ if(it.episodes)facts.push(`<span class="poster">${it.episodes} episodes</span>`);
+ if(it.year)facts.push(`<span class="poster">${it.year}</span>`);
+ if(it.status)facts.push(`<span class="poster">${esc(it.status)}</span>`);
+ it.genres.forEach(g=>facts.push(`<span class="poster">${esc(g)}</span>`));
+ el.mF.innerHTML=facts.join('');
+ updMFav();
+ el.m.classList.add('show');
+ document.body.style.overflow='hidden';
+}
+
+function updMFav(){
+ if(!S.cur)return;
+ const a=isFav(S.cur.id);
+ el.mFav.querySelector('span').textContent=a?'Saved':'Save';
+ el.mFav.style.color=a?'var(--coral)':'var(--ink)';
+}
+
+function closeM(){
+ el.m.classList.remove('show');
+ document.body.style.overflow='';
+ S.cur=null;
+}
+
+async function download(){
+ const it=S.cur;if(!it)return;
+ const btn=el.dl,orig=btn.innerHTML;
+ btn.disabled=true;btn.innerHTML='<span class="spinner spinner-sm"></span> Preparing…';
+ try{
+  const r=await fetch(it.image,{mode:'cors'});
+  if(!r.ok)throw 0;
+  const b=await r.blob();
+  const u=URL.createObjectURL(b);
+  const a=document.createElement('a');
+  a.href=u;a.download=slug(it.title)+'.jpg';
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(u),5000);
+  toast('Download started');
+ }catch{
+  window.open(it.image,'_blank','noopener');
+  toast('Image opened in a new tab');
+ }finally{
+  btn.disabled=false;btn.innerHTML=orig;
+ }
+}
+
+function toast(m){
+ const n=document.createElement('div');
+ n.className='toast';
+ n.innerHTML=`<svg class="icon"><use href="#i-check"/></svg><span>${esc(m)}</span>`;
+ el.toasts.appendChild(n);
+ setTimeout(()=>{
+  n.style.opacity='0';n.style.transform='translateY(10px)';
+  setTimeout(()=>n.remove(),320);
+ },2300);
+}
+
+const syncType=()=>$$('#typeSeg button').forEach(b=>b.classList.toggle('active',b.dataset.type===S.type));
+
+async function rnd(){
+ if(!S.trend.length){
+  try{
+   const j=await api(`${API}/top/anime?limit=25&sfw=true&filter=bypopularity`);
+   S.trend=clean(j.data||[]);
+  }catch{toast('Could not load a random title');return}
+ }
+ if(!S.trend.length)return;
+ openModal(S.trend[Math.floor(Math.random()*S.trend.length)]);
+}
+
+/* events */
+document.addEventListener('click',e=>{
+ const f=e.target.closest('.fav-btn');
+ if(f){e.stopPropagation();const it=find(+f.dataset.fav);if(it)toggleFav(it);return}
+ const c=e.target.closest('.link-card[data-id]');
+ if(c){const it=find(+c.dataset.id);if(it)openModal(it);return}
+ const q=e.target.closest('[data-query]');
+ if(q){go(q.dataset.query);return}
+ const v=e.target.closest('[data-view]');
+ if(v){e.preventDefault();setView(v.dataset.view)}
+});
+
+let deb;
+el.inp.forEach(i=>{
+ i.addEventListener('input',()=>{
+  clearTimeout(deb);
+  deb=setTimeout(()=>{
+   const t=i.value.trim();
+   if(t.length===0||t.length>=3){
+    if(S.view!=='discover')setView('discover');
+    run(t,{push:false});
+   }
+  },650);
+ });
+ i.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();clearTimeout(deb);go(i.value)}});
+});
+
+el.go.forEach(b=>b.addEventListener('click',()=>{
+ const i=b.closest('.form-card')?.querySelector('.js-inp')||b.parentElement?.querySelector('.js-inp');
+ go(i?i.value:'');
+}));
+
+el.tSeg?.addEventListener('click',e=>{
+ const b=e.target.closest('button[data-type]');if(!b)return;
+ S.type=b.dataset.type;syncType();run(S.query);
+});
+
+el.sort?.addEventListener('change',()=>{
+ S.sort=el.sort.value;
+ if(S.view==='favorites')renderFavs();else drawGrid();
+});
+
+el.more?.addEventListener('click',()=>{S.page++;run(S.query,{append:true,push:false})});
+el.close.addEventListener('click',closeM);
+el.m.addEventListener('click',e=>{if(e.target===el.m)closeM()});
+el.dl.addEventListener('click',download);
+el.mFav.addEventListener('click',()=>{if(S.cur)toggleFav(S.cur)});
+el.rnd?.addEventListener('click',rnd);
+el.top?.addEventListener('click',()=>{
+ S.type='tv';syncType();S.sort='score';
+ if(el.sort)el.sort.value='score';
+ setView('discover');run('');
+});
+el.topS?.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+
+el.clr?.addEventListener('click',()=>{
+ S.fav=[];save(FK,S.fav);updCounts();renderFavs();toast('All favourites cleared');
+});
+
+document.addEventListener('keydown',e=>{
+ const t=/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName||'');
+ if(e.key==='Escape'){if(el.m.classList.contains('show'))closeM();return}
+ if(e.key==='/'&&!t){
+  e.preventDefault();
+  if(S.view!=='discover'&&S.view!=='home')setView('discover');
+  (S.view==='home'?el.inp[0]:el.inp[1])?.focus();
+ }
+});
+
+addEventListener('scroll',()=>{el.tTop.hidden=scrollY<520},{passive:true});
+el.tTop.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+
+/* categories */
+$('#catGrid').innerHTML=CATS.map(([n,d,i,c])=>`<button class="link-card" data-query="${esc(n)}"><span class="lc-icon" style="background:var(--${c}-soft);color:${c==='sun'?'#B8792A':'var(--'+c+')'}"><svg class="icon"><use href="#i-${i}"/></svg></span><b>${esc(n)}</b><span class="note">${esc(d)}</span></button>`).join('');
+
+/* boot */
+updCounts();drawRec();syncType();trending();setView('home');
 })();
 </script>
 </body>
